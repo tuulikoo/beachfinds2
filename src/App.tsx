@@ -23,17 +23,18 @@ export type RawNote = {
 } &RawNoteData
 
 export type RawNoteData = {
-  title: string
-  markdown: string
-  tagIds: string[]
-}
-
+  title: string;
+  markdown: string;
+  tagIds: string[];
+  imageName?: string; // Optional property for image name
+};
 
 export type NoteData = {
-  title: string
-  markdown: string
-  tags: Tag[]
-}
+  title: string;
+  markdown: string;
+  tags: Tag[];
+  imageName?: string; // Optional property for image name
+};
 
 export type Tag = {
   id: string
