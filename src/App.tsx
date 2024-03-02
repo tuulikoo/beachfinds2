@@ -12,7 +12,7 @@ import { NoteLayout } from "./components/NoteLayout";
 import { Note } from "./components/Note";
 import { EditNote } from "./components/EditNote";
 import { Navbar } from './components/Navbar';
-import {Login} from "./functions/Login";
+import {Login} from "./components/Login";
 
 export type Note = {
   id: string
