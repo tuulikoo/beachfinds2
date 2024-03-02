@@ -23,20 +23,35 @@ export function NoteForm({
     const titleRef = useRef<HTMLInputElement>(null);
     const markdownRef = useRef<HTMLTextAreaElement>(null);
     const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
+    const [image, setImage] = useState<File | null>(null)
     const navigate = useNavigate();
 
-function handleSubmit(event: React.FormEvent){
-    event.preventDefault();
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
 
-    onSubmit({
-        title: titleRef.current!.value,
-        markdown: markdownRef.current!.value,
-        tags: selectedTags,
-    })
+        // Construct the submission data
+        const submissionData: NoteData & { imageName?: string } = {
+            title: titleRef.current!.value,
+            markdown: markdownRef.current!.value,
+            tags: selectedTags,
+        };
 
-    navigate("..")
+        // If an image has been selected, include its name in the submission data
+        if (image) {
+            submissionData.imageName = image.name;
+        }
 
-}
+        onSubmit(submissionData);
+
+        navigate("..");
+    };
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+            setImage(file);
+        }
+    };
 
 
     return (
@@ -77,6 +92,10 @@ function handleSubmit(event: React.FormEvent){
             <Form.Group controlId="markdown">
                     <Form.Label>Body</Form.Label>
                     <Form.Control defaultValue = {markdown} required as= "textarea" ref={markdownRef} rows={15} />
+                </Form.Group>
+                <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Label>Image</Form.Label>
+                     <Form.Control type="file" onChange={handleImageChange} accept="image/*" />
                 </Form.Group>
                 <Stack direction="horizontal" gap={2} className="justify-content-end">
                     <Button type = "submit"
