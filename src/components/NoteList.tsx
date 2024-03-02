@@ -3,7 +3,7 @@ import { Badge, Button, Card, Col, Modal, Row, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import ReactSelect from "react-select";
-import { Tag } from "./App";
+import { Tag } from "../App";
 import styles from "./NoteList.module.css"
 
 type NoteListProps = {

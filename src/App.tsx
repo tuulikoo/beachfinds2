@@ -3,14 +3,16 @@ import { Routes, Route, Navigate } from "react-router-dom"
 
 
 import { Container } from "react-bootstrap";
-import { NewNote } from "./NewNote";
+import { NewNote } from "./components/NewNote";
 import { useLocalStorage } from "./useLocalStorage";
 import { useMemo } from "react";
 import { v4 as uuidV4} from "uuid";
-import { NoteList } from "./NoteList";
-import { NoteLayout } from "./NoteLayout";
-import { Note } from "./Note";
-import { EditNote } from "./EditNote";
+import { NoteList } from "./components/NoteList";
+import { NoteLayout } from "./components/NoteLayout";
+import { Note } from "./components/Note";
+import { EditNote } from "./components/EditNote";
+import { Navbar } from './components/Navbar';
+import {Login} from "./functions/Login";
 
 export type Note = {
   id: string
@@ -98,6 +100,7 @@ function App() {
 
   return (
     <Container className="my-4">
+    <Navbar />
       <Routes>
         <Route path="/" element={<NoteList 
         notes={notesWithTags} 
@@ -121,6 +124,7 @@ function App() {
              availableTags={tags} />} />
         </Route>
         <Route path="*" element={<Navigate to ="/"/>} /> 
+        <Route path="/login" element={<Login />} />
       </Routes> 
     </Container>
   )

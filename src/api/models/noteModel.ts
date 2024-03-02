@@ -1,14 +1,7 @@
 import mongoose from 'mongoose';
+import {Note} from '../../types/DBtypes'
 
-interface Note {
-  title: string;
-  markdown: string;
-  tags: mongoose.Types.ObjectId[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const noteSchema = new mongoose.Schema<Note>({
+const noteModel = new mongoose.Schema<Note>({
   title: {
     type: String,
     required: true,
@@ -31,4 +24,4 @@ const noteSchema = new mongoose.Schema<Note>({
   },
 });
 
-export default mongoose.model<Note>('Note', noteSchema);
+export default mongoose.model<Note>('Note', noteModel);
