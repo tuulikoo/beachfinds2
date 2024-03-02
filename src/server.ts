@@ -11,7 +11,7 @@ import {
     ApolloServerPluginLandingPageLocalDefault,
     ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default';
-import { notFound, errorHandler } from '../middlewares';
+import { notFound, errorHandler } from './middlewares';
 import authenticate from './functions/authenticate';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyMiddleware } from 'graphql-middleware';
