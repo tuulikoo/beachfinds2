@@ -2,7 +2,7 @@ import { UpdateQuery } from 'mongoose';
 import noteModel from '../models/noteModel';
 import { Note } from '../../App';
 
-export const noteResolver = {
+export default {
   Query: {
     noteById: async (_parent: undefined, { id }: { id: string }) => {
       return await noteModel.findById(id).populate('tags');
