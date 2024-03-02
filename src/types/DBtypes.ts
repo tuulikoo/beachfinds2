@@ -16,6 +16,18 @@ type Item = {
   identifiers: string[];
 };
 
+type Note = {
+    title: string;
+    markdown: string;
+    tags: Types.ObjectId[];
+    createdAt: Date;
+    updatedAt: Date;
+  }
+
+  type Tag = {
+    label: string;
+  }
+
 type User = Partial<Document> & {
   id: Types.ObjectId | string;
   user_name: string;
@@ -57,5 +69,7 @@ export type{
   UserInput,
   LoginUser,
   TokenContent,
-  Item
+  Item,
+  Note,
+  Tag
 };

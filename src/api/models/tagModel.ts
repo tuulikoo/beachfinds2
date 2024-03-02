@@ -1,14 +1,11 @@
 import mongoose from 'mongoose';
+import {Tag} from '../../types/DBtypes';
 
-interface Tag {
-  label: string;
-}
-
-const tagSchema = new mongoose.Schema<Tag>({
+const tagModel = new mongoose.Schema<Tag>({
   label: {
     type: String,
     required: true,
   },
 });
 
-export default mongoose.model<Tag>('Tag', tagSchema);
+export default mongoose.model<Tag>('Tag', tagModel);
