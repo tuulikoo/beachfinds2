@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LoginForm } from '../components/LoginForm';
+import { LoginForm } from './LoginForm';
 
 export const Login = () => {
     const handleLogin = (email: string, password: string) => {
