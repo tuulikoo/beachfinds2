@@ -44,21 +44,35 @@ export default {
           body: JSON.stringify(args.user),
         });
       },
-    login: async (
-      _parent: undefined,
-      args: {credentials: {username: string; password: string}},
-    ) => {
-      return await fetchData<LoginResponse>(
-        `${process.env.AUTH_URL}/auth/login`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(args.credentials),
-        },
-      );
-    },
+      login: async (
+        _parent: undefined,
+        args: {credentials: {username: string; password: string}},
+      ) => {
+        // Log the credentials received to verify they are what you expect
+        console.log("Attempting login with credentials:", args.credentials);
+      
+        try {
+          const response = await fetchData<LoginResponse>(
+            `${process.env.AUTH_URL}/auth/login`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(args.credentials),
+            },
+          );
+      
+          // Log the response from the server
+          console.log("Login response:", response);
+      
+          return response;
+        } catch (error) {
+          // Log any errors that occur during the fetch
+          console.error("Error during login:", error);
+          throw new GraphQLError('Error during login');
+        }
+      },
     updateUser: async (
       _parent: undefined,
       args: {user: UserOutput},

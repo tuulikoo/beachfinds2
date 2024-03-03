@@ -1,12 +1,10 @@
 import React from "react";
 import { FormEvent, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../operations/mutations";
 
-type RegisterFormProps = {
-    onRegister: (email: string, password: string, user_name: string, country: string, city: string, contact: 'yes' | 'no') => void;
-};
-
-export const RegisterForm: React.FC<RegisterFormProps> = ({onRegister}) => {
+export const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [user_name, setUser_name] = useState('');
@@ -14,13 +12,37 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({onRegister}) => {
     const [city, setCity] = useState('');
     const [contact, setContact] = useState<'yes' | 'no'>('no');
 
+    // Apollo useMutation hook
+    const [registerUser, { loading, error }] = useMutation(REGISTER_USER, {
+        variables: {
+            user: {
+                email,
+                password,
+                user_name,
+                country,
+                city,
+                contact,
+            },
+        },
+        onCompleted: (data) => {
+            // Handle successful registration
+            console.log('Registration successful', data);
+            // Redirect or update UI as needed
+        },
+        onError: (error) => {
+            // Handle errors
+            console.error('Registration error', error);
+        },
+    });
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        onRegister(email, password, user_name, country, city, contact);
+        registerUser(); // Call the mutation function
     };
-
     return (
         <Container className="mt-5">
+            {loading && <div>Loading...</div>}
+            {error && <Alert variant="danger">{error.message}</Alert>}
             <Row className="justify-content-md-center">
                 <Col xs={12} md={6}>
                     <Form onSubmit={handleSubmit}>
@@ -98,4 +120,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({onRegister}) => {
             </Row>
         </Container>
     );
+
+   
 };

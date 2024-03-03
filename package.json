@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build:backend": "tsc -p tsconfig.node.json",
-  "build": "npm run build:backend && vite build",
+    "build": "npm run build:backend && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start:backend": "node --loader ts-node/esm src/server.ts",
-    "dev:backend": "nodemon --exec 'ts-node -T --project tsconfig.node.json' src/server.ts"
+    "dev:backend": "nodemon --exec 'ts-node -T --project tsconfig.node.json' src/server.ts",
+    "dev:backend2": "tsx src/server.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.5",
+    "@apollo/server": "^4.10.0",
     "@graphql-tools/load-files": "^7.0.0",
     "@types/express": "^4.17.21",
     "@types/geojson": "^7946.0.14",
@@ -48,6 +51,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "nodemon": "^2.0.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.4"
   }

@@ -12,7 +12,7 @@ import { NoteLayout } from "./components/NoteLayout";
 import { Note } from "./components/Note";
 import { EditNote } from "./components/EditNote";
 import { Navbar } from './components/Navbar';
-import {Login} from "./components/Login";
+import {LoginForm} from "./components/LoginForm";
 
 export type Note = {
   id: string
@@ -125,7 +125,7 @@ function App() {
              availableTags={tags} />} />
         </Route>
         <Route path="*" element={<Navigate to ="/"/>} /> 
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginForm />} />
       </Routes> 
     </Container>
   )

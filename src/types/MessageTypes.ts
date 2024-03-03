@@ -1,5 +1,5 @@
 import {Point} from 'geojson';
-import {UserOutput} from './DBtypes';
+import {LoginUser, UserOutput} from './DBtypes';
 type MessageResponse = {
   message: string;
 };
@@ -17,6 +17,11 @@ type LoginResponse = MessageResponse & {
   user: UserOutput;
 };
 
+type LoginResponse2 = MessageResponse & {
+  token: string;
+  user: LoginUser;
+}
+
 type UploadResponse = MessageResponse & {
   data: {
     filename: string;
@@ -30,4 +35,5 @@ export type{
   UserResponse,
   LoginResponse,
   UploadResponse,
+  LoginResponse2
 };
