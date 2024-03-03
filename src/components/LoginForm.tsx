@@ -1,19 +1,45 @@
 import React, { useState, FormEvent } from 'react';
-import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Modal, Alert } from 'react-bootstrap';
 import { RegisterForm } from './RegistrationForm';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../operations/mutations';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../types/AuthContext';
 
-type LoginFormProps = {
-    onLogin: (email: string, password: string) => void; // Define any additional props as needed
-};
-
-export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+export const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showModal, setShowModal] = useState(false); // State to control the modal display
 
+    const navigate = useNavigate();
+    const { login } = useAuth();
+
+    const [loginMutation, { loading, error }] = useMutation(LOGIN_USER, {
+        variables: {
+            credentials: {
+                username: email, // Assuming email is used as username
+                password,
+            },
+        },
+        onCompleted: (data) => {
+            console.log('Complete login response:', data);
+            // Handle successful login
+            console.log('Login successful', data);
+            // Call the login function from AuthContext and pass the token
+            login(data.login);
+            alert("You are logged in");
+            navigate("/"); // Navigate to home page
+        },
+        onError: (error) => {
+            // Handle login error
+            console.error('Login error', error);
+        },
+    });
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        onLogin(email, password);
+        loginMutation(); // Call the login mutation
+
     };
 
     // Function to handle modal close
@@ -21,15 +47,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     // Function to handle modal show
     const handleShow = () => setShowModal(true);
 
-    function handleRegister(email: string, password: string, user_name: string, country: string, city: string, contact: 'yes' | 'no'): void {
-        console.log("Registering:", { email, password, user_name, country, city, contact });
-        // Add your registration logic here
-        handleClose(); // Close the modal after handling registration
-    }
-
-
     return (
         <Container className="mt-5">
+            {loading && <div>Loading...</div>}
+            {error && <Alert variant="danger">{error.message}</Alert>}
             <Row className="justify-content-md-center">
                 <Col xs={12} md={6}>
                     <Form onSubmit={handleSubmit}>
@@ -75,7 +96,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                     <Modal.Title>Register</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RegisterForm onRegister={handleRegister}/>
+                    <RegisterForm />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
