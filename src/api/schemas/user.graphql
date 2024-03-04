@@ -1,4 +1,4 @@
-export type User {
+type User {
   id: ID!
   user_name: String!
   email: String!
@@ -7,18 +7,18 @@ export type User {
   contact: String!
 }
 
-export type LoginResponse {
+type LoginResponse {
   token: String
   message: String!
   user: User!
 }
 
-export type UserResponse {
+type UserResponse {
   message: String!
   user: User!
 }
 
-export input Credentials {
+input Credentials {
   username: String!
   password: String!
 }
