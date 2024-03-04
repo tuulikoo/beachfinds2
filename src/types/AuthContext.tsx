@@ -1,7 +1,6 @@
 // AuthContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { UserOutput } from './DBtypes'; // Ensure this path matches your project structure
-import { LoginResponse } from './MessageTypes';
 
 // Define the shape of the context
 interface AuthContextType {
