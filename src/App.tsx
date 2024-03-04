@@ -13,6 +13,7 @@ import { Note } from "./components/Note";
 import { EditNote } from "./components/EditNote";
 import { Navbar } from './components/Navbar';
 import {LoginForm} from "./components/LoginForm";
+import React from "react";
 
 export type Note = {
   id: string
