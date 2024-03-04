@@ -14,6 +14,7 @@ import { EditNote } from "./components/EditNote";
 import { Navbar } from './components/Navbar';
 import {LoginForm} from "./components/LoginForm";
 import React from "react";
+import { EditUser } from "./components/EditUser";
 
 export type Note = {
   id: string
@@ -31,6 +32,13 @@ export type RawNoteData = {
 };
 
 export type NoteData = {
+  title: string;
+  markdown: string;
+  tags: Tag[];
+  imageName?: string; // Optional property for image name
+};
+
+export type UserData = {
   title: string;
   markdown: string;
   tags: Tag[];
@@ -127,6 +135,7 @@ function App() {
         </Route>
         <Route path="*" element={<Navigate to ="/"/>} /> 
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/editUser" element={<EditUser />} />
       </Routes> 
     </Container>
   )
