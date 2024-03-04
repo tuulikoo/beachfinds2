@@ -28,11 +28,9 @@ export const EditUser: React.FC = () => {
 
     const { user } = useAuth();
     const userId = user?.id;
-    console.log("userid in editing", userId)
-
 
     const { loading: fetchLoading, error: fetchError, data: fetchUserData } = useQuery(GET_USER_DETAILS, {
-        variables: { id: userId }, // Pass userId as a variable to the query
+        variables: { id: userId },
       });
 
     useEffect(() => {
@@ -51,29 +49,24 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
         event.preventDefault();
         const updatedUserData: UserDetails = { ...userData };
     
-        // Update email if it's empty
         if (!userData.email) {
-            updatedUserData.email = user?.email || ''; // Fallback to user.email if available
+            updatedUserData.email = user?.email || '';
         }
-    
-        // Update user_name if it's empty
+
         if (!userData.user_name) {
-            updatedUserData.user_name = user?.user_name || ''; // Fallback to user.user_name if available
+            updatedUserData.user_name = user?.user_name || '';
         }
-    
-        // Update country if it's empty
+
         if (!userData.country) {
-            updatedUserData.country = user?.country || ''; // Fallback to user.country if available
+            updatedUserData.country = user?.country || '';
         }
-    
-        // Update city if it's empty
+
         if (!userData.city) {
-            updatedUserData.city = user?.city || ''; // Fallback to user.city if available
+            updatedUserData.city = user?.city || ''; 
         }
-    
-        // Update contact if it's empty
+
         if (!userData.contact) {
-            updatedUserData.contact = user?.contact || 'no'; // Fallback to user.contact if available
+            updatedUserData.contact = user?.contact || 'no'; 
         }
     
         console.log("Updated userData:", updatedUserData);
@@ -84,8 +77,8 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
             },
         }).then(() => {
             alert("Details updated successfully");
-            fetchUserData.refetch(); // Refetch the user details
-            navigate("/"); // Navigate to home page
+            fetchUserData.refetch(); 
+            navigate("/"); 
         }).catch(error => {
             console.log('Error updating user', error);
         });
@@ -107,7 +100,7 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
                                 placeholder={user?.email}
                                 value={userData.email}
                                 onChange={(e) => setUserData(prevUserData => ({ ...prevUserData, email: e.target.value }))}
-                                disabled={!editing} // Disable if not editing
+                                disabled={!editing} 
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicusername">
@@ -117,7 +110,7 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
                                 placeholder={user?.user_name}
                                 value={userData.user_name}
                                 onChange={(e) => setUserData(prevUserData => ({ ...prevUserData, user_name: e.target.value }))}
-                                disabled={!editing} // Disable if not editing
+                                disabled={!editing} 
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCountry">
@@ -127,7 +120,7 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
                                 placeholder={user?.country}
                                 value={userData.country}
                                 onChange={(e) => setUserData(prevUserData => ({ ...prevUserData, country: e.target.value }))}
-                                disabled={!editing} // Disable if not editing
+                                disabled={!editing} 
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCity">
@@ -137,7 +130,7 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
                                 placeholder={user?.city}
                                 value={userData.city}
                                 onChange={(e) => setUserData(prevUserData => ({ ...prevUserData, city: e.target.value }))}
-                                disabled={!editing} // Disable if not editing
+                                disabled={!editing}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicContact">
@@ -148,13 +141,13 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
                                 label="Enable Contact"
                                 checked={userData.contact === 'yes'}
                                 onChange={(e) => setUserData(prevUserData =>({ ...prevUserData, contact: e.target.checked ? 'yes' : 'no' }))}
-                                disabled={!editing} // Disable if not editing
+                                disabled={!editing} 
                             />
                         </Form.Group>
                         <Button variant="primary" type="button" onClick={() => setEditing(!editing)}>
                             {editing ? 'Cancel' : 'Edit'} {/* Toggle edit button text */}
                         </Button>
-                        {editing && ( // Render save button only when editing
+                        {editing && ( 
                             <Button variant="success" type="submit" disabled={updateLoading}>
                                 {updateLoading ? 'Updating...' : 'Save'}
                             </Button>
