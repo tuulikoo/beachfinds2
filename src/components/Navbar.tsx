@@ -8,6 +8,7 @@ export const Navbar: React.FC = () => {
 
     // Logging to check the current user state
     console.log("Current user:", user);
+    console.log("Current user id:", user?.id);
 
     const handleLogout = () => {
         const confirmLogout = window.confirm('Confirm logout');
@@ -34,9 +35,14 @@ export const Navbar: React.FC = () => {
                             <Link className="nav-link" to="/new">Create New Note</Link>
                         </li>
                         {user ? (
-                            <li className="nav-item">
-                                <button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button>
-                            </li>
+                             <>
+                             <li className="nav-item">
+                                 <button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button>
+                             </li>
+                             <li className="nav-item">
+                                 <Link className="nav-link" to="/editUser">User</Link>
+                             </li>
+                         </>
                         ) : (
                             <li className="nav-item">
                                 <Link className="nav-link" to="/login">Login</Link>
