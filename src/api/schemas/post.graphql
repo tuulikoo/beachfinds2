@@ -1,0 +1,75 @@
+scalar DateTime
+
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  tags: [Tag!]!
+  createdAt: DateTime!
+  location: Location!
+  owner: User!
+  category: Category!
+}
+
+enum Category {
+  Shells
+  Seaglass
+  Fossils
+  Stones
+  Driftwood
+  Misc
+}
+
+type Location {
+  type: String!
+  coordinates: [Float]!
+}
+
+input Coordinates {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  type: String!
+  coordinates: [Float]!
+}
+
+type Query {
+  postById(id: ID!): Post
+  posts: [Post]
+  postsByArea(topRight: Coordinates!, bottomLeft: Coordinates!): [Post]
+  postsByOwner(ownerId: ID!): [Post]
+}
+
+input PostInput {
+  title: String!
+  description: String!
+  tags: [TagInput]!
+  location: LocationInput!
+  category: Category!
+}
+
+input TagInput {
+  label: String!
+}
+
+input PostModify {
+  item_name: String
+  title: String!
+  description: String!
+  location: LocationInput
+  tags: [TagInput]!
+}
+
+type Mutation {
+  createPost(input: PostInput!): Post
+  """
+  Role 'admin' or 'user' are determined by the token
+  """
+  updatePost(id: ID!, input: PostModify!): Post
+  """
+  Role 'admin' or 'user' are determined by the token
+  """
+  deletePost(id: ID!): Post
+}

@@ -16,15 +16,41 @@ type Item = {
   identifiers: string[];
 };
 
+
+type Post = Partial<Document> & {
+  id?: Types.ObjectId | string;
+  item_name: string;
+  title: string;
+  category: 'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  owner: Types.ObjectId | User;
+  location: Point;
+  filename: string;
+  createDate: Date;
+  description: string;
+  tags: Types.ObjectId[];
+};
+
+type Cat = Partial<Document> & {
+  id?: Types.ObjectId | string;
+  cat_name: string;
+  weight: number;
+  owner: Types.ObjectId | User;
+  filename: string;
+  birthdate: Date;
+  location: Point;
+};
+
 type Note = {
+    id: Types.ObjectId | string;
     title: string;
     markdown: string;
     tags: Types.ObjectId[];
     createdAt: Date;
-    updatedAt: Date;
+    owner: Types.ObjectId | User;
   }
 
   type Tag = {
+    id: Types.ObjectId | string;
     label: string;
   }
 
@@ -41,15 +67,21 @@ type User = Partial<Document> & {
 
 type UserOutput = Omit<User, 'password' | 'role'>;
 
-type UserInput = Omit<User, '_id' | 'role'>;
+type UserInput = Omit<User, 'id' | 'role'>;
 
 type LoginUser = Omit<User, 'password'>;
+
+type NoteInput = Omit<Note, '_id' | 'createdAt'>;
+
+type UserModified = Omit<User, 'role' | 'id'>;
+
+
+
 
 type TokenContent = {
   token: string;
   user: LoginUser;
 };
-// *** db location query
 type Location = {
   lat: number;
   lng: number;
@@ -59,7 +91,8 @@ type LocationInput = {
   topRight: Location;
   bottomLeft: Location;
 };
-// ***
+
+
 
 export type{
   Location,
@@ -71,5 +104,9 @@ export type{
   TokenContent,
   Item,
   Note,
-  Tag
+  Tag,
+  UserModified,
+  Post,
+  NoteInput,
+  Cat
 };

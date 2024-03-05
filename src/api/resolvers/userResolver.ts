@@ -5,10 +5,6 @@ import {LoginResponse, UserResponse} from '../../types/MessageTypes'; //LoginRes
 import {isLoggedIn} from '../../functions/authorize';
 import {MyContext} from '../../types/MyContext';
 
-// TODO: create resolvers based on user.graphql
-// note: when updating or deleting a user don't send id to the auth server, it will get it from the token. So token needs to be sent with the request to the auth server
-// note2: when updating or deleting a user as admin, you need to send user id (dont delete admin btw) and also check if the user is an admin by checking the role from the user object form context
-
 export default {
   Item: {
     owner: async (parent: Item) => {
@@ -18,12 +14,7 @@ export default {
     },
   },
   Query: {
-    /*
-        type Query {
-  users: [User]
-  userById(id: ID!): User
-  checkToken: UserResponse
-}*/
+
     users: async () => {
       return await fetchData<User[]>(`${process.env.AUTH_URL}/users`);
     },
@@ -145,21 +136,5 @@ export default {
     },
   },
 
-  /*
-        type Mutation {
-  login(credentials: Credentials!): LoginResponsei222jaa!
-  aia
-  register(user: UserInput!): UserResponse
-  updateUser(user: UserModify!): UserResponse
-  deleteUser: UserResponse
-  """
-  Separate mutations for admin because of rest api
-  """
-  updateUserAsAdmin(user: UserModify!, id: ID!): UserResponse
-  """
-  Separate mutations for admin because of rest api
-  """
-  deleteUserAsAdmin(id: ID!): UserResponse
-}
-}*/
+
 };
