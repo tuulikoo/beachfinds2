@@ -3,7 +3,7 @@ import {MyContext} from '../types/MyContext';
 
 const isLoggedIn = (context: MyContext): void => {
   if (!context.userdata) {
-    throw new GraphQLError('Not authenticated', {
+    throw new GraphQLError('Not authenticated tt', {
       extensions: {
         code: 'UNAUTHORIZED',
         http: {

@@ -2,20 +2,6 @@ import {Point} from 'geojson';
 import {Document, Types} from 'mongoose';
 
 
-type Item = {
-  id: Types.ObjectId;
-  item_name: string;
-  title:string;
-  category: 'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
-  date_found: Date;
-  date_posted: Date;
-  owner: Types.ObjectId | User;
-  location: Point;
-  filename: string;
-  description: string;
-  identifiers: string[];
-};
-
 
 type Post = Partial<Document> & {
   id?: Types.ObjectId | string;
@@ -29,25 +15,6 @@ type Post = Partial<Document> & {
   description: string;
   tags: Types.ObjectId[];
 };
-
-type Cat = Partial<Document> & {
-  id?: Types.ObjectId | string;
-  cat_name: string;
-  weight: number;
-  owner: Types.ObjectId | User;
-  filename: string;
-  birthdate: Date;
-  location: Point;
-};
-
-type Note = {
-    id: Types.ObjectId | string;
-    title: string;
-    markdown: string;
-    tags: Types.ObjectId[];
-    createdAt: Date;
-    owner: Types.ObjectId | User;
-  }
 
   type Tag = {
     id: Types.ObjectId | string;
@@ -70,8 +37,6 @@ type UserOutput = Omit<User, 'password' | 'role'>;
 type UserInput = Omit<User, 'id' | 'role'>;
 
 type LoginUser = Omit<User, 'password'>;
-
-type NoteInput = Omit<Note, '_id' | 'createdAt'>;
 
 type UserModified = Omit<User, 'role' | 'id'>;
 
@@ -102,11 +67,7 @@ export type{
   UserInput,
   LoginUser,
   TokenContent,
-  Item,
-  Note,
   Tag,
   UserModified,
   Post,
-  NoteInput,
-  Cat
 };

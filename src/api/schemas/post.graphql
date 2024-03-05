@@ -43,15 +43,13 @@ type Query {
 }
 
 input PostInput {
+  item_name: String!
   title: String!
   description: String!
-  tags: [TagInput]!
+  tags: [ID]!
   location: LocationInput!
   category: Category!
-}
-
-input TagInput {
-  label: String!
+  filename: String!
 }
 
 input PostModify {
@@ -59,7 +57,7 @@ input PostModify {
   title: String!
   description: String!
   location: LocationInput
-  tags: [TagInput]!
+  tags: [ID!]!
 }
 
 type Mutation {

@@ -1,13 +1,13 @@
 import {GraphQLError} from 'graphql';
-import {Item, User, UserInput, UserOutput} from '../../types/DBtypes'; //TokenContent should be used
+import {Post, User, UserInput, UserOutput} from '../../types/DBtypes'; //TokenContent should be used
 import fetchData from '../../functions/fetchData';
 import {LoginResponse, UserResponse} from '../../types/MessageTypes'; //LoginResponse should be used
 import {isLoggedIn} from '../../functions/authorize';
 import {MyContext} from '../../types/MyContext';
 
 export default {
-  Item: {
-    owner: async (parent: Item) => {
+  Post: {
+    owner: async (parent: Post) => {
       return await fetchData<User>(
         `${process.env.AUTH_URL}/users/${parent.owner}`,
       );
