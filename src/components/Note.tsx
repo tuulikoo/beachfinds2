@@ -45,15 +45,10 @@ export function Note({ onDelete }: NoteProps) {
             </Row>
 
             <ReactMarkdown>{note.markdown}</ReactMarkdown>
-
-            {/* Conditionally render the image name or an image preview */}
             {note.imageName && (
                 <Row className="mt-4">
                     <Col>
-                        {/* Display the image name */}
                         <p>Image: {note.imageName}</p>
-                        {/* If you want to display the image instead, you'll need the actual image URL */}
-                        {/* <img src={URL_of_the_image} alt="Uploaded Image" className="img-fluid" /> */}
                     </Col>
                 </Row>
             )}

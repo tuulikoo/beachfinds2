@@ -8,24 +8,25 @@ import {isLoggedIn} from '../../functions/authorize';
 export default {
   Query: {
     posts: async () => {
-      return await postModel.find();
+      return await postModel.find().populate('tags').populate('owner');
     },
     postById: async (_parent: undefined, args: {id: string}) => {
-      return await postModel.findById(args.id);
+      return await postModel.findById(args.id).populate('tags').populate('owner');
     },
     postsByArea: async (_parent: undefined, args: LocationInput) => {
       const rightCorner = [args.topRight.lng, args.topRight.lat];
       const leftCorner = [args.bottomLeft.lng, args.bottomLeft.lat];
+      // Populate both 'tags' and 'owner' fields
       return await postModel.find({
         location: {
           $geoWithin: {
             $box: [leftCorner, rightCorner],
           },
         },
-      });
+      }).populate('tags').populate('owner');
     },
     postsByOwner: async (_parent: undefined, args: {ownerId: string}) => {
-      return await postModel.find({owner: args.ownerId});
+      return await postModel.find({owner: args.ownerId}).populate('tags');
     },
   },
   Mutation: {
