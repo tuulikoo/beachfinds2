@@ -86,3 +86,73 @@ export const DELETE_USER_AS_ADMIN = gql`
     }
   }
 `;
+
+export const CREATE_POST = gql`
+  mutation CreatePost($input: PostInput!) {
+    createPost(input: $input) {
+      id
+      title
+      description
+      category
+      owner {
+        id
+      }
+      tags {
+        id
+        label
+      }
+      location {
+        type
+        coordinates
+      }
+    }
+  }
+`;
+
+// Mutation for updating a post
+export const UPDATE_POST = gql`
+  mutation UpdatePost($id: ID!, $input: PostModify!) {
+    updatePost(id: $id, input: $input) {
+      id
+      title
+      description
+      category
+      tags {
+        id
+        label
+      }
+      location {
+        type
+        coordinates
+      }
+    }
+  }
+`;
+
+// Mutation for deleting a post
+export const DELETE_POST = gql`
+  mutation DeletePost($id: ID!) {
+    deletePost(id: $id) {
+      id
+    }
+  }
+`;
+
+// Mutation for creating a tag
+export const CREATE_TAG = gql`
+  mutation CreateTag($label: String!) {
+    createTag(label: $label) {
+      id
+      label
+    }
+  }
+`;
+
+// Mutation for deleting a tag
+export const DELETE_TAG = gql`
+  mutation DeleteTag($id: ID!) {
+    deleteTag(id: $id) {
+      id
+    }
+  }
+`;
