@@ -16,6 +16,17 @@ import {LoginForm} from "./components/LoginForm";
 import React from "react";
 import { EditUser } from "./components/EditUser";
 
+export type User = {
+  id: string;
+  user_name: string;
+  email: string;
+  country: string;
+  city: string;
+  contact: 'yes' | 'no';
+  role: 'user' | 'admin';
+  password: string;
+};
+
 export type Note = {
   id: string
 } &NoteData
@@ -26,17 +37,34 @@ export type RawNote = {
 
 export type RawNoteData = {
   title: string;
-  markdown: string;
-  tagIds: string[];
-  imageName?: string; // Optional property for image name
+  item_name: string;
+  description: string;
+  filename: string; // Optional property for image name
+  category:'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  owner: string | User
+  location: {
+    type: "Point";
+    coordinates: [number, number];
+  };
+  createDate: string;
+  tags: string[];
 };
 
 export type NoteData = {
   title: string;
-  markdown: string;
+  item_name: string;
+  description: string;
   tags: Tag[];
-  imageName?: string; // Optional property for image name
+  filename: string; // Optional property for image name
+  category:'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  owner: string | User;
+  location: {
+    type: "Point";
+    coordinates: [number, number];
+  };
+  createDate: string;
 };
+
 
 export type UserData = {
   title: string;
