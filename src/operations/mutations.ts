@@ -147,6 +147,15 @@ export const CREATE_TAG = gql`
     }
   }
 `;
+// Mutation for updating a tag
+export const UPDATE_TAG = gql`
+  mutation UpdateTag($id: ID!, $label: String!) {
+    updateTag(id: $id, label: $label) {
+      id
+      label
+    }
+  }
+`;
 
 // Mutation for deleting a tag
 export const DELETE_TAG = gql`

@@ -25,6 +25,13 @@ export const tagResolver = {
         return await tagModel.create({ label });
       }
     },
+    updateTag: async (_parent: undefined, { id, label }: { id: string; label: string }) => {
+      const updatedTag = await tagModel.findByIdAndUpdate(id, { label }, { new: true });
+      if (!updatedTag) {
+        throw new Error(`Tag with ID ${id} not found`);
+      }
+      return updatedTag;
+    },  
     deleteTag: async (_parent: undefined, { id }: { id: string }) => {
       return await tagModel.findByIdAndDelete(id);
     }

@@ -1,28 +1,30 @@
+import { useQuery } from "@apollo/client";
+import { GET_ALL_TAGS } from "../operations/queries"; 
+import { CREATE_POST } from '../operations/mutations';
+import { useMutation } from '@apollo/client';
+import NoteForm from "./NoteForm"; 
+import { PostData } from "../App"; 
 
-import { NoteData, Tag } from "../App";
-import { NoteForm } from "./NoteForm";
 
-type NewNoteProps = {
-  onSubmit: (data: NoteData) => void;
-  availableTags: Tag[];
-  updateAvailableTags: (tag: Tag) => void;
-};
+const NewNote = () => {
+  const { loading, error, data } = useQuery(GET_ALL_TAGS);
+  const [createPostMutation] = useMutation(CREATE_POST);
 
-export function NewNote({ onSubmit, availableTags, updateAvailableTags }: NewNoteProps) {
-  // This function is intended to update the parent or global state with the newly created tag.
-  // It gets called by NoteForm after a tag is successfully created and added to its state.
-  const handleAddTag = (newTag: Tag) => {
-    updateAvailableTags(newTag);
+  const handleSubmit = async (noteData: PostData) => {
+    console.log(noteData);
+    createPostMutation({ variables: { input: noteData } });
   };
 
+  if (loading) return <p>Loading tags...</p>;
+  if (error) return <p>Error fetching tags: {error.message}</p>;
+
   return (
-    <>
-      <h1 className="mb-4">New Note</h1>
-      <NoteForm
-        onSubmit={onSubmit} // Handles submitting the note
-        onAddTag={handleAddTag} // Updates the parent or global state with a new tag
-        availableTags={availableTags} // Passes down the list of available tags
-      />
-    </>
+    <div>
+      <h1>Add a new salty treasure</h1>
+      {/* Pass the fetched tags to NoteForm */}
+      <NoteForm onSubmit={handleSubmit} availableTags={data.allTags} />
+    </div>
   );
-}
+};
+
+export default NewNote;

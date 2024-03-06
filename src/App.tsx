@@ -1,20 +1,19 @@
+//App.tsx
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Routes, Route, Navigate } from "react-router-dom"
-
-
 import { Container } from "react-bootstrap";
-import { NewNote } from "./components/NewNote";
-import { useLocalStorage } from "./useLocalStorage";
-import { useMemo } from "react";
-import { v4 as uuidV4} from "uuid";
+import NewNote from "./components/NewNote";
 import { NoteList } from "./components/NoteList";
 import { NoteLayout } from "./components/NoteLayout";
 import { Note } from "./components/Note";
 import { EditNote } from "./components/EditNote";
 import { Navbar } from './components/Navbar';
 import {LoginForm} from "./components/LoginForm";
-import React from "react";
 import { EditUser } from "./components/EditUser";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_TAGS } from "./operations/queries";
+
+
 
 export type User = {
   id: string;
@@ -30,6 +29,23 @@ export type User = {
 export type Note = {
   id: string
 } &NoteData
+
+export type GetAllNotesQueryData = {
+  posts: Note[];
+};
+
+export type PostData = {
+  title: string;
+  item_name: string;
+  description: string;
+  tags: string[];
+  filename: string;
+  category: 'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  location: {
+      type: "Point"; 
+      coordinates: [number, number]; 
+  };
+};
 
 export type RawNote = {
   id: string
@@ -51,6 +67,7 @@ export type RawNoteData = {
 };
 
 export type NoteData = {
+  id: string;
   title: string;
   item_name: string;
   description: string;
@@ -78,95 +95,32 @@ export type Tag = {
   label: string
 }
 
-function App() {
-  const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", [])
-  const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
-
-  const notesWithTags = useMemo(() => {
-    return notes.map(note => {
-      return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id))}
-    })
-  }, [notes, tags])
-
-  function onCreateNote({tags, ...data}: NoteData){
-    setNotes(prevNotes => {
-      return [...prevNotes, { ...data, id: uuidV4(), tagIds: tags.map(tag => tag.id)}]
-    })
-  }
-
-  function onUpdateNote(id: string, {tags, ...data}: NoteData){
-    setNotes(prevNotes => {
-      return prevNotes.map(note => {
-        if(note.id === id){
-          return { ...note,...data, tagIds: tags.map(tag => tag.id)}
-        }else {
-          return note
-        }
-      })
-    })
-  }
-
-  function addTag(tag: Tag){
-    setTags(prev => [...prev, tag])
-  }
-
-  function updateTag(id: string, label: string){
-    setTags(prevTags =>{
-      return prevTags.map(tag => {
-      if(tag.id === id){
-        return { ...tag, label}
-    } else {
-      return tag
-    }
-  })
-})
+export type RawTag = {
+  id: string
 }
 
-  function deleteTag(id: string){
-    setTags(prevTags => {
-      return prevTags.filter(tag => tag.id !== id)
+function App() {
 
-    })
-  }
-
-  function onDeleteNote(id: string){
-    setNotes(prevNotes => {
-      return prevNotes.filter(note => note.id !== id)
-    })
-  }
+  //onst notes = useQuery(GET_ALL_POSTS);
+  const availableTags = useQuery(GET_ALL_TAGS);
 
 
   return (
     <Container className="my-4">
-    <Navbar />
+      <Navbar />
       <Routes>
-        <Route path="/" element={<NoteList 
-        notes={notesWithTags} 
-        availableTags={tags} 
-        onUpdateTag={updateTag} 
-        onDeleteTag = {deleteTag}/>} /> 
-        <Route path="/new" element={
-        <NewNote 
-        onSubmit={onCreateNote} 
-        onAddTag=
-          {addTag} 
-          availableTags={tags}/>
-          } />  
-
-        <Route path="/:id" element={<NoteLayout notes= {notesWithTags}/>} >
-          <Route index element={<Note onDelete={onDeleteNote}/>} />
-          <Route path="edit" element={<EditNote
-           onSubmit={onUpdateNote} 
-           onAddTag=
-             {addTag} 
-             availableTags={tags} />} />
+        <Route path="/" element={<NoteList />} />
+        <Route path="/new" element={<NewNote />} />
+        <Route path="/:id" element={<NoteLayout />}>
+          <Route index element={<Note />} />
+          <Route path="edit" element={<EditNote availableTags={availableTags.data}/>} /> // Extract the 'data' property from 'availableTags'
         </Route>
-        <Route path="*" element={<Navigate to ="/"/>} /> 
         <Route path="/login" element={<LoginForm />} />
         <Route path="/editUser" element={<EditUser />} />
-      </Routes> 
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </Container>
-  )
+  );
 }
 
-export default App
+export default App;

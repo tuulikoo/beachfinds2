@@ -17,5 +17,6 @@ type Query {
 
 type Mutation {
   createTag(label: String!): Tag
+  updateTag(id: ID!, label: String!): Tag
   deleteTag(id: ID!): Tag
 }

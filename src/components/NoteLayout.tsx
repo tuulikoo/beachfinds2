@@ -1,18 +1,26 @@
-import { Navigate, Outlet, useOutletContext, useParams } from "react-router-dom"
-import { Note } from "../App"
+import { Navigate, Outlet, useOutletContext, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_POSTS } from "../operations/queries";
+import { Note } from "../App"; // Ensure this import is correct based on where your Note type is defined
 
-type NoteLayoutProps = {
-    notes: Note[]
-}
-export function  NoteLayout({notes}: NoteLayoutProps){
-    const { id } = useParams()
-    const note = notes.find(n => n.id === id)
+export function NoteLayout() {
+    // Fetch all posts
+    const { loading, error, data } = useQuery(GET_ALL_POSTS);
 
-    if(note == null) return <Navigate to="/" replace />
+    const { id } = useParams();
 
-    return <Outlet context={note} />
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    // Ensure that the `data.posts` array is typed correctly, here assumed to be `Note[]`
+    const note: Note | undefined = data.posts.find((n: Note) => n.id === id);
+
+    if (note == null) return <Navigate to="/" replace />;
+
+    return <Outlet context={note} />;
 }
 
 export function useNote() {
-    return useOutletContext<Note>()
+    // You might need to specify the type expected to be returned here as well
+    return useOutletContext<Note>();
 }

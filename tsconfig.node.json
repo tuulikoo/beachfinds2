@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
 
-    "noEmit": false,
+    "noEmit": true,
     "outDir": "./dist"
   },
   "include": ["src/**/*", "vite.config.ts"], // Now includes vite.config.ts
