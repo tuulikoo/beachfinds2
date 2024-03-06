@@ -16,7 +16,14 @@ export const tagResolver = {
 
   Mutation: {
     createTag: async (_parent: undefined, { label }: { label: string }) => {
-      return await tagModel.create({ label });
+
+      const existingTag = await tagModel.findOne({ label });
+  
+      if (existingTag) {
+        return existingTag;
+      } else {
+        return await tagModel.create({ label });
+      }
     },
     deleteTag: async (_parent: undefined, { id }: { id: string }) => {
       return await tagModel.findByIdAndDelete(id);
