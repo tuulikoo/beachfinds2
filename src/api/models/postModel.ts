@@ -17,7 +17,6 @@ const postModel = new mongoose.Schema<Post>({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
     required: true,
   },
   filename: {
@@ -41,10 +40,9 @@ const postModel = new mongoose.Schema<Post>({
     coordinates: {
       type: [Number],
       required: true,
-        //required: true,
     },
-},
-});
+  },
+}, { timestamps: true });
 
 export default mongoose.model<Post>('Post', postModel);
 

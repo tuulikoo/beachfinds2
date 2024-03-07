@@ -20,7 +20,7 @@ export function NoteLayout() {
     return <Outlet context={note} />;
 }
 
-export function useNote() {
+export function useNote(): Note {
     // You might need to specify the type expected to be returned here as well
     return useOutletContext<Note>();
 }

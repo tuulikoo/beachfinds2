@@ -63,6 +63,9 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
 const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    
+
+    
     // Create the PostData object from form inputs
     const newPost: PostData = {
         title: titleRef.current?.value || "",
@@ -78,13 +81,8 @@ const handleSubmit = async (event: React.FormEvent) => {
     };
     console.log("New post: ", newPost);
 
-    try {
-        // Call the onSubmit function passed as a prop with the newPost object
-        await onSubmit(newPost);
-    } catch (error) {
-        console.error("Error submitting post:", error);
-        // Handle submission error (e.g., show an error message)
-    }
+    await onSubmit(newPost);
+    
 };
 
   // Function to handle image file selection

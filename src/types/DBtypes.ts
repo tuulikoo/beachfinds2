@@ -11,7 +11,6 @@ type Post = Partial<Document> & {
   owner: Types.ObjectId | User;
   location: Point;
   filename: string;
-  createDate: Date;
   description: string;
   tags: Types.ObjectId[];
 };

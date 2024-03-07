@@ -11,7 +11,9 @@ import { Navbar } from './components/Navbar';
 import {LoginForm} from "./components/LoginForm";
 import { EditUser } from "./components/EditUser";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_TAGS } from "./operations/queries";
+import { GET_ALL_TAGS, GET_ALL_POSTS } from "./operations/queries";
+import MapShow from "./components/MapComponent";
+
 
 
 
@@ -62,7 +64,6 @@ export type RawNoteData = {
     type: "Point";
     coordinates: [number, number];
   };
-  createDate: string;
   tags: string[];
 };
 
@@ -74,12 +75,11 @@ export type NoteData = {
   tags: Tag[];
   filename: string; // Optional property for image name
   category:'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
-  owner: string | User;
+  owner: User;
   location: {
     type: "Point";
     coordinates: [number, number];
   };
-  createDate: string;
 };
 
 
@@ -103,13 +103,17 @@ function App() {
 
   //onst notes = useQuery(GET_ALL_POSTS);
   const availableTags = useQuery(GET_ALL_TAGS);
+  const { data: postData, loading, error } = useQuery(GET_ALL_POSTS);
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;      
 
   return (
     <Container className="my-4">
       <Navbar />
       <Routes>
         <Route path="/" element={<NoteList />} />
+        <Route path="/map" element={<MapShow postData={postData} />} />
         <Route path="/new" element={<NewNote />} />
         <Route path="/:id" element={<NoteLayout />}>
           <Route index element={<Note />} />

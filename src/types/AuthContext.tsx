@@ -25,6 +25,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = (loginResponse: { token: string; user: UserOutput }) => {
     const { token, user } = loginResponse;
+    console.log('User received in AuthProvider:', loginResponse);
     localStorage.setItem('token', token);
     setToken(token);
     setUser(user);

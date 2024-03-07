@@ -2,13 +2,18 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../types/AuthContext'; // Adjust the import path based on your project structure
 
+
 export const Navbar: React.FC = () => {
+    const authContext = useAuth(); 
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+
 
     // Logging to check the current user state
     console.log("Current user:", user);
     console.log("Current user id:", user?.id);
+    console.log("token = ", authContext.token);
+    console.log("user from token navbar = ", authContext.user);
 
     const handleLogout = () => {
         const confirmLogout = window.confirm('Confirm logout');
@@ -30,6 +35,9 @@ export const Navbar: React.FC = () => {
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <Link className="nav-link" to="/">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/map">Map</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/new">Create New Note</Link>

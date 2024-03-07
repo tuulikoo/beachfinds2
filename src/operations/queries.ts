@@ -75,7 +75,6 @@ export const GET_ALL_POSTS = gql`
         type
         coordinates
       }
-      createdAt
     }
   }
 `;
@@ -100,7 +99,6 @@ export const GET_POST_BY_ID = gql`
         type
         coordinates
       }
-      createdAt
     }
   }
 `;

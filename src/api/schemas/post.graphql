@@ -5,10 +5,11 @@ type Post {
   title: String!
   description: String!
   tags: [Tag!]!
-  createdAt: DateTime!
   location: Location!
   owner: User!
   category: Category!
+  createdAt: DateTime! 
+  updatedAt: DateTime!
 }
 
 enum Category {
