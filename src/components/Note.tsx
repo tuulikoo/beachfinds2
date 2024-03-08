@@ -37,16 +37,11 @@ export function Note() {
           <p>Category: {note.category}</p>
           <p>Owner: {note.owner.user_name}</p>
           <p>Filename: {note.filename}</p>
-          <img
-            src={`/api/images/${note.filename}`}
-            alt={note.item_name}
-            style={{ maxWidth: "100%" }}
-            />
+        
           <p>
             Location: Latitude {note.location.coordinates[1]}, Longitude{" "}
             {note.location.coordinates[0]}
           </p>
-
           {note.tags.length > 0 && (
             <Stack gap={1} direction="horizontal" className="flex-wrap">
               {note.tags.map((tag) => (
@@ -82,7 +77,7 @@ export function Note() {
         <Row className="mt-4">
           <Col>
           <img
-            src={`/api/images/${note.filename}`}
+            src={`http://localhost:3002/api/v1/upload/${note.filename}`}
             alt={note.item_name}
             style={{ maxWidth: "100%" }}
 />

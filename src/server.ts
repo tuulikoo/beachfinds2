@@ -17,7 +17,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyMiddleware } from 'graphql-middleware';
 import { MyContext } from './types/MyContext';
 import { MessageResponse } from './types/MessageTypes';
-import imageProxy from './imageProxy';
+
 
 const app = express();
 
@@ -78,7 +78,6 @@ const server = new ApolloServer<MyContext>({
                 context: async ({ req }) => authenticate(req),
             }),
         );
-        app.use('/api/images', imageProxy);
 
         app.use(notFound);
         app.use(errorHandler);
