@@ -12,7 +12,6 @@ export function NoteLayout() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
-    // Ensure that the `data.posts` array is typed correctly, here assumed to be `Note[]`
     const note: Note | undefined = data.posts.find((n: Note) => n.id === id);
 
     if (note == null) return <Navigate to="/" replace />;

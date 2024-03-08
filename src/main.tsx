@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <AuthProvider> {/* Wrap your app with AuthProvider */}
+        <AuthProvider> 
           <App />
         </AuthProvider>
       </BrowserRouter>

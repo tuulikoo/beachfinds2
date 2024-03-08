@@ -1,13 +1,12 @@
-
 import Map from './Map';
-import { PostData } from '../App'; // Adjust the import path as needed
+import { PostData } from '../App';
 
 interface MapShowProps {
-    postData: { posts: PostData[] }; // Adjust based on the actual shape of your data
+    postData: { posts: PostData[] };
   }
 
 const MapShow: React.FC<MapShowProps> = ({ postData }) => {
-  // Assuming `postData` contains an array of posts under the `posts` property
+
   console.log("postData = ", postData);
   const posts = postData.posts;
 
@@ -15,7 +14,7 @@ const MapShow: React.FC<MapShowProps> = ({ postData }) => {
   const locations = posts.map(post => ({
     lat: post.location.coordinates[0],
     lng: post.location.coordinates[1],
-    display_name: post.title, // or any other property you wish to display
+    display_name: post.title,
   }));
 
   return (

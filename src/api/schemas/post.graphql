@@ -7,6 +7,7 @@ type Post {
   tags: [Tag!]!
   location: Location!
   owner: User!
+  filename: String!
   category: Category!
   createdAt: DateTime! 
   updatedAt: DateTime!

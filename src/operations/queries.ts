@@ -63,6 +63,7 @@ export const GET_ALL_POSTS = gql`
       title
       description
       category
+      filename
       owner {
         id
         user_name

@@ -11,7 +11,7 @@ interface Location {
 }
 
 interface MapProps {
-  locations: Location[]; // Now it's an array of locations
+  locations: Location[];
 }
 
 const Map: React.FC<MapProps> = ({ locations }) => {

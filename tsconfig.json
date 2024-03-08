@@ -25,7 +25,7 @@
   },
   "include": [
     "src"
-  ],
+, "src/imageProxy.ts"  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
