@@ -7,16 +7,19 @@ import 'leaflet/dist/leaflet.css';
 interface Location {
   lat: number;
   lng: number;
-  display_name: string;
+  display_name?: string;
 }
 
 interface MapProps {
   locations: Location[];
+  initialCenter?: Location;
 }
 
-const Map: React.FC<MapProps> = ({ locations }) => {
+const Map: React.FC<MapProps> = ({ locations, initialCenter }) => {
+  const center: [number, number] = [initialCenter?.lat ?? locations[0].lat, initialCenter?.lng ?? locations[0].lng];
+ 
   return (
-    <MapContainer center={[locations[0].lat, locations[0].lng]} zoom={13} style={{ height: '100vh', width: '100vw' }}>
+    <MapContainer center={center} zoom={13} style={{ height: '100vh', width: '100vw' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

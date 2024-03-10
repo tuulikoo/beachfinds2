@@ -7,13 +7,14 @@ import { CREATE_TAG } from "../operations/mutations";
 import { PostData, Tag } from "../App";
 import { useAuth } from "../types/AuthContext";
 
+
 type NoteFormProps = {
   onSubmit: (noteData: PostData, newTags?: SelectOption[]) => void;
   onAddTag?: (label: string) => void;
   availableTags: Tag[];
   title?: string;
   description?: string;
-  tags?: string[]; 
+  tags?: string[];
   item_name?: string;
   filename?: string;
   category?: string;
@@ -40,16 +41,12 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
   const authContext = useAuth();
   const token = authContext.token;
 
-    
-
   const tagOptions = availableTags.map((tag) => ({
     label: tag.label,
     value: tag.id,
   }));
 
   const [filename, setFile] = useState<File | null>(null);
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
   const navigate = useNavigate();
 
   // Function to handle new tag creation
@@ -78,7 +75,6 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
     }
     const formData = new FormData();
     formData.append("image", filename);
-    console.log("Formdatan token: ", token);    
 
     try {
       const uploadResponse = await fetch(
@@ -87,8 +83,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
           method: "POST",
           body: formData,
           headers: {
-            Authorization:
-            `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -100,8 +95,9 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
       const uploadResult = await uploadResponse.json();
       console.log("Upload successful", uploadResult);
       console.log("filename in uploadResult: ", uploadResult.data.filename);
+      console.log("coordinates in uploadResult: ", uploadResult.data.location.coordinates);
+      const imgcoordinates: number[] = uploadResult.data.location.coordinates;
       const finalFilename: string = `${uploadResult.data.filename}.png`;
-
 
       // Create the PostData object from form inputs
       const newPost: PostData = {
@@ -119,7 +115,8 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
           | "Misc",
         location: {
           type: "Point",
-          coordinates: [parseFloat(latitude), parseFloat(longitude)],
+          coordinates: [imgcoordinates[0], imgcoordinates[1]],
+          //coordinates: [parseFloat(latitude), parseFloat(longitude)],
         },
       };
       console.log("New post: ", newPost);
@@ -180,26 +177,6 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
             <option value="Driftwood">Driftwood</option>
             <option value="Misc">Misc</option>
           </Form.Select>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-3">
-          <Col>
-            <Form.Label>Latitude</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter latitude"
-              value={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
-            />
-          </Col>
-          <Col>
-            <Form.Label>Longitude</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter longitude"
-              value={longitude}
-              onChange={(e) => setLongitude(e.target.value)}
-            />
-          </Col>
         </Form.Group>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Image</Form.Label>

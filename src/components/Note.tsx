@@ -12,7 +12,7 @@ export function Note() {
   const navigate = useNavigate();
 
   const allNotes = useQuery(GET_ALL_POSTS);
-  console.log("All notes: ", allNotes)
+  console.log("All notes: ", allNotes);
 
   const { token } = useAuth();
 
@@ -26,22 +26,20 @@ export function Note() {
       })
       .catch((error) => console.error("Error deleting post:", error));
   };
-  console.log("Note: ", note)
+  console.log("Note: ", note);
 
   return (
     <>
       <Row className="align-items-center mb-4">
         <Col>
-          <h2>Item Name: {note.item_name}</h2>
           <h3>Title: {note.title}</h3>
           <p>Category: {note.category}</p>
           <p>Owner: {note.owner.user_name}</p>
-          <p>Filename: {note.filename}</p>
-        
-          <p>
-            Location: Latitude {note.location.coordinates[1]}, Longitude{" "}
-            {note.location.coordinates[0]}
-          </p>
+          <Link
+            to={`/map?lat=${note.location.coordinates[0]}&lng=${note.location.coordinates[1]}`}
+          >
+            <p>Show on map</p>
+          </Link>
           {note.tags.length > 0 && (
             <Stack gap={1} direction="horizontal" className="flex-wrap">
               {note.tags.map((tag) => (
@@ -76,11 +74,11 @@ export function Note() {
       {note.filename && (
         <Row className="mt-4">
           <Col>
-          <img
-            src={`http://localhost:3002/api/v1/upload/${note.filename}`}
-            alt={note.item_name}
-            style={{ maxWidth: "100%" }}
-/>
+            <img
+              src={`http://localhost:3002/api/v1/upload/${note.filename}`}
+              alt={note.item_name}
+              style={{ maxWidth: "100%" }}
+            />
           </Col>
         </Row>
       )}

@@ -1,0 +1,89 @@
+
+.chat-container {
+    position: fixed; 
+    bottom: 20px; /* Distance from bottom */
+    right: 20px; /* Distance from right */
+    max-width: 350px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000; /* Ensure it stays on top of other elements */
+  }
+  
+  .chat-box {
+    height: 300px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  #user-input, button {
+    width: calc(100% - 20px); 
+    padding: 10px;
+    margin: 5px 0; 
+  }
+  
+  #user-input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block; 
+  }
+  
+  button {
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block; 
+  }
+  .sendButton {
+    background-color: #4caf50;
+  }
+  
+  .sendButton:hover {
+    background-color: #03615a;
+  }
+  
+  .minimize-button {
+    background-color: #9ed4f4; 
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px; 
+  }
+  
+  .minimize-button:hover {
+    background-color: #0d09d5;
+  }
+  
+
+  .chat-container-minimized {
+    display: none;
+  }
+  
+  .chat-container-minimized .chat-box,
+  .chat-container-minimized #user-input,
+  .chat-container-minimized button {
+    display: none; 
+  }
+  
+  
+  .chat-container-minimized .minimize-button {
+    background-color: #350e68; 
+  }
+
+  .chat-icon {
+    position: fixed;
+    width: 110px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50; 
+    color: white;
+    padding: 10px;
+    border-radius: 50%; 
+    cursor: pointer;
+    z-index: 10001; 
+  }
