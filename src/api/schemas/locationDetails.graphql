@@ -1,0 +1,29 @@
+type LocationDetails {
+  id: ID!
+  lat: Float!
+  lng: Float!
+  country: String!
+  ocean: String
+  weather: String
+  nearbyAttractions: [String]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Query {
+  locationDetailsById(id: ID!): LocationDetails
+  locationDetails: [LocationDetails]
+}
+
+input LocationDetailsInput {
+  lat: Float!
+  lng: Float!
+  country: String!
+  ocean: String
+  weather: String
+  nearbyAttractions: [String]
+}
+
+type Mutation {
+  createLocationDetails(locationDetails: LocationDetailsInput!): LocationDetails
+}

@@ -1,15 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { Types } from 'mongoose';
-
-interface LocationDetails extends Document {
-  id: Types.ObjectId;
-  lat: number;
-  lng: number;
-  country: string;
-  ocean?: string;
-  weather?: string;
-  nearbyAttractions?: string[];
-}
+import mongoose, { Schema } from 'mongoose';
+import { LocationDetails } from '../../types/DBtypes';
 
 const locationDetailsSchema = new Schema<LocationDetails>({
   lat: {
