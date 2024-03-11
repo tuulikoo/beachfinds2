@@ -32,13 +32,13 @@ type User = Partial<Document> & {
 };
 
 type LocationDetails = Partial <Document> &{
-  id: Types.ObjectId | string;
+  id?: Types.ObjectId | string;
   lat: number;
   lng: number;
   continent: string;
   country: string;
-  state: string;
-  town: string;
+  state?: string;
+  town?: string;
 };
 // type LocationDetailsInput = {
 //   lat: number;

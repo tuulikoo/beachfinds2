@@ -21,10 +21,12 @@ const locationDetailsSchema = new mongoose.Schema<LocationDetails>({
   state: {
     type: String,
     required: false,
+    default: "state not found"
   },
   town: {
     type: String,
     required: false,
+    default: "town not found"
   },
 });
 

@@ -3,18 +3,33 @@ import { useNote } from "./NoteLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { DELETE_POST } from "../operations/mutations";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_ALL_POSTS } from "../operations/queries";
+import { GET_ALL_POSTS, GET_LOCATION_BY_COORDINATES } from "../operations/queries";
 import { useAuth } from "../types/AuthContext";
+
 
 export function Note() {
   const [deletePost] = useMutation(DELETE_POST);
   const note = useNote();
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const allNotes = useQuery(GET_ALL_POSTS);
   console.log("All notes: ", allNotes);
 
-  const { token } = useAuth();
+  const coordinatesDefined = note && note.location && note.location.coordinates.length === 2;
+  const lat = coordinatesDefined ? note.location.coordinates[0] : null;
+  const lng = coordinatesDefined ? note.location.coordinates[1] : null;
+
+  const { data: locationData, loading: locationLoading, error: locationError } = useQuery(GET_LOCATION_BY_COORDINATES, {
+    variables: { lat, lng },
+    skip: !coordinatesDefined, // Skip the query if coordinates are not defined
+  });
+
+  //console.log("Location data continent: ", locationData.locationByCoordinates.town);
+  if (locationLoading) return <div>Loading...</div>;
+  if (locationError) return <div>Error! {locationError.message}</div>;
+
+  const { continent, country, state, town } = locationData.locationByCoordinates;
 
   const onDelete = (id: string) => {
     deletePost({
@@ -26,6 +41,8 @@ export function Note() {
       })
       .catch((error) => console.error("Error deleting post:", error));
   };
+
+
   console.log("Note: ", note);
 
   return (
@@ -82,6 +99,14 @@ export function Note() {
           </Col>
         </Row>
       )}
+     {locationData && locationData.locationByCoordinates && (
+      <Row className="mt-4">
+        <Col>
+          <p>Location: {town}, {state}, {country}</p>
+          <p>Continent: {continent}</p>
+        </Col>
+      </Row>
+    )}
     </>
   );
 }

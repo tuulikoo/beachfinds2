@@ -41,46 +41,51 @@ const fetchFromOpenCage = async (lat:number, lng:number) => {
 };
 
 const saveLocationDetailsToDB = async (locationDetails: LocationDetailsInput) => {
-    try {
-      // Construct the mutation, including lat and lng in the request
-      const mutation = `
-        mutation {
-          createLocationDetails(locationDetails: {
-            lat: ${locationDetails.lat},
-            lng: ${locationDetails.lng},
-            continent: "${locationDetails.continent}",
-            country: "${locationDetails.country}",
-            state: "${locationDetails.state}",
-            town: "${locationDetails.town}",
-          }) {
-            id
-            lat
-            lng
-            continent
-            country
-            state
-            town
-          }
-        }
-      `;
-  
-      // Make the request to your GraphQL server
-      const response = await axios.post(
-        GRAPHQL_ENDPOINT,
-        { query: mutation },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-  
-      // Handle the response
-      if (response.data.errors) {
-        console.error('GraphQL errors:', response.data.errors);
-      } else {
-        console.log('Location details saved:', response.data.data.createLocationDetails);
+  const query = `
+    mutation CreateLocationDetail($input: LocationDetailsInput!) {
+      createLocationDetail(input: $input) {
+        id
+        lat
+        lng
+        continent
+        country
+        state
+        town
       }
-    } catch (error) {
-      console.error('Error saving location details to DB:', error);
-      throw error;
     }
+  `;
+
+  const variables = {
+    input: locationDetails,
   };
+
+  console.log('Sending mutation:', query, 'with variables:', variables);
+
+  try {
+    
+
+    const response = await axios.post(GRAPHQL_ENDPOINT, {
+      query,
+      variables,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log('Response:', response.data);
+
+    if (response.data.errors) {
+      console.error('GraphQL errors:', response.data.errors);
+      throw new Error('Failed to save location details due to GraphQL errors');
+    } else {
+      console.log('Location details saved successfully:', response.data.data.createLocationDetails);
+      return response.data.data.createLocationDetails;
+    }
+  } catch (error) {
+    console.error('Error saving location details to DB:', error);
+    throw error;
+  }
+};
 
 export { fetchFromOpenCage, saveLocationDetailsToDB };

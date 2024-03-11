@@ -145,11 +145,13 @@ export function NoteList() {
         </>
     )
 }
-function NoteCard({id, title, tags}: SimplifiedNote){
+function NoteCard({id, title, tags, item_name, filename}: SimplifiedNote){
+    const imageUrl = `http://localhost:3002/api/v1/upload/${filename}`;
     return <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`}>
         <Card.Body>
             <Stack gap={2} className="align-items-center justify-content-center h-100">
                 <span className="fs-5">{title}</span>
+                <Card.Img variant="top" src={imageUrl} alt={item_name} />
                 {tags.length > 0 && (
                     <Stack gap = {1} direction="horizontal"
                         className="justify-content-center flex-wrap">
