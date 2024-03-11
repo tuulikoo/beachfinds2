@@ -1,24 +1,22 @@
-import { LocationDetails } from "../../types/DBtypes";
-import locationsModel from "../models/locationsModel";
+import { LocationDetails } from '../../types/DBtypes';
+import locationsModel from '../models/locationsModel';
+import locationModel from '../models/locationsModel';
 
-export default {
-    Query: {
-        locationDetails: async () => {
-        return await locationsModel.find();
-        },
-        locationDetailsById: async (_parent: undefined, args: {id: string}) => {
-        return await locationsModel.findById(args.id);
-        },
-        locationDetailsByCoordinates: async (_parent: undefined, args: {lat: number; lng: number}) => {
-            return await locationsModel.findOne({lat: args.lat, lng: args.lng});
-        }
+export const locationResolver = {
+  Query: {
+    allLocations: async () => {return await locationsModel.find();},
+    locationById: async (_parent: undefined, { id }: { id: string }) => {
+      return await locationModel.findById(id);
     },
-    Mutation: {
-        createLocationDetails: async (
-        _parent: undefined,
-        args: {input: Omit<LocationDetails, 'id'>},
-        ) => {
-        return await locationsModel.create(args.input);
-        },
-    },
+  },
+
+  Mutation: {
+    createLocationDetail: async (
+      _parent: undefined,
+      args: {input: Omit<LocationDetails, 'id'>},
+    ) => {
+      return await locationModel.create(args.input);
+    }
+  }
 };
+

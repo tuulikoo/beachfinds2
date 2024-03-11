@@ -1,29 +1,31 @@
+scalar DateTime
+
 type LocationDetails {
   id: ID!
+  continent: String!
+  country: String!
+  state: String
+  town: String
   lat: Float!
   lng: Float!
-  country: String!
-  ocean: String
-  weather: String
-  nearbyAttractions: [String]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type Query {
-  locationDetailsById(id: ID!): LocationDetails
-  locationDetails: [LocationDetails]
 }
 
 input LocationDetailsInput {
+  continent: String!
+  country: String!
+  state: String
+  town: String
   lat: Float!
   lng: Float!
-  country: String!
-  ocean: String
-  weather: String
-  nearbyAttractions: [String]
+}
+
+type Query {
+  locationById(id: ID!): LocationDetails
+  allLocations: [LocationDetails!]!
+
 }
 
 type Mutation {
-  createLocationDetails(locationDetails: LocationDetailsInput!): LocationDetails
+  createLocationDetail(input: LocationDetailsInput): LocationDetails
+  
 }

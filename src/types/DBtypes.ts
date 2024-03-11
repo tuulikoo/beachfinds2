@@ -31,6 +31,25 @@ type User = Partial<Document> & {
   password: string;
 };
 
+type LocationDetails = Partial <Document> &{
+  id: Types.ObjectId | string;
+  lat: number;
+  lng: number;
+  continent: string;
+  country: string;
+  state: string;
+  town: string;
+};
+// type LocationDetailsInput = {
+//   lat: number;
+//   lng: number;
+//   continent: string;
+//   country: string;
+//   state: string;
+//   town: string;
+// };
+
+
 type UserOutput = Omit<User, 'password' | 'role'>;
 
 type UserInput = Omit<User, 'id' | 'role'>;
@@ -69,4 +88,6 @@ export type{
   Tag,
   UserModified,
   Post,
+  LocationDetails,
+  //LocationDetailsInput
 };

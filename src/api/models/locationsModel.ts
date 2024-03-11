@@ -1,7 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import { LocationDetails } from '../../types/DBtypes';
 
-const locationDetailsSchema = new Schema<LocationDetails>({
+const locationDetailsSchema = new mongoose.Schema<LocationDetails>({
   lat: {
     type: Number,
     required: true,
@@ -10,22 +10,22 @@ const locationDetailsSchema = new Schema<LocationDetails>({
     type: Number,
     required: true,
   },
+  continent: {
+    type: String,
+    required: true,
+  },
   country: {
     type: String,
     required: true,
   },
-  ocean: {
+  state: {
     type: String,
     required: false,
   },
-  weather: {
+  town: {
     type: String,
     required: false,
   },
-  nearbyAttractions: [{
-    type: String,
-    required: false,
-  }],
-}, { timestamps: true });
+});
 
 export default mongoose.model<LocationDetails>('LocationDetail', locationDetailsSchema);

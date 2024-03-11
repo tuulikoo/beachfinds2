@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_TAG } from "../operations/mutations";
 import { PostData, Tag } from "../App";
 import { useAuth } from "../types/AuthContext";
+import { fetchFromOpenCage } from "../functions/locationDetails";
 
 
 type NoteFormProps = {
@@ -120,6 +121,13 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
         },
       };
       console.log("New post: ", newPost);
+      console.log("Calling processLocationDetails with coordinates:", imgcoordinates[0], imgcoordinates[1]);
+      try {
+        await fetchFromOpenCage(imgcoordinates[0], imgcoordinates[1]);
+        console.log("Location details processed successfully.");
+      } catch (error) {
+        console.error("Error processing location details:", error);
+      }
 
       await onSubmit(newPost);
       navigate("..");

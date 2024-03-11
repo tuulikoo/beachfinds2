@@ -165,3 +165,17 @@ export const DELETE_TAG = gql`
     }
   }
 `;
+
+export const CREATE_LOCATION_DETAILS = gql`
+  mutation CreateLocationDetails($input: LocationDetailsInput!) {
+    createLocationDetails(input: $input) {
+      id
+      lat
+      lng
+      continent
+      country
+      state
+      town
+    }
+  }
+`;
