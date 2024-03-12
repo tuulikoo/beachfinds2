@@ -31,7 +31,7 @@
     display: block; 
   }
   
-  button {
+  .button {
     color: #ffffff;
     border: none;
     border-radius: 5px;

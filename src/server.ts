@@ -123,3 +123,4 @@ const server = new ApolloServer<MyContext>({
     console.error("Server error", error);
   }
 })();
+export default app;

@@ -40,14 +40,6 @@ type LocationDetails = Partial <Document> &{
   state?: string;
   town?: string;
 };
-// type LocationDetailsInput = {
-//   lat: number;
-//   lng: number;
-//   continent: string;
-//   country: string;
-//   state: string;
-//   town: string;
-// };
 
 
 type UserOutput = Omit<User, 'password' | 'role'>;
@@ -57,9 +49,7 @@ type UserInput = Omit<User, 'id' | 'role'>;
 type LoginUser = Omit<User, 'password'>;
 
 type UserModified = Omit<User, 'role' | 'id'>;
-
-
-
+type TestUser = Partial<User>
 
 type TokenContent = {
   token: string;
@@ -75,8 +65,6 @@ type LocationInput = {
   bottomLeft: Location;
 };
 
-
-
 export type{
   Location,
   LocationInput,
@@ -89,5 +77,6 @@ export type{
   UserModified,
   Post,
   LocationDetails,
+  TestUser
   //LocationDetailsInput
 };

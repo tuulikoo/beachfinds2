@@ -1,8 +1,7 @@
 // AuthContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { UserOutput } from './DBtypes'; // Ensure this path matches your project structure
 
-// Define the shape of the context
 interface AuthContextType {
   user: UserOutput | null;
   token: string | null;
@@ -10,31 +9,41 @@ interface AuthContextType {
   logout: () => void;
 }
 
-// Create the context with an initial null value
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Define props for the provider for type checking
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-// Implement the provider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserOutput | null>(null);
+  const [user, setUser] = useState<UserOutput | null>(JSON.parse(localStorage.getItem('user') || 'null'));
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+
+  useEffect(() => {
+    // Listen for changes in local storage
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem('token'));
+      setUser(JSON.parse(localStorage.getItem('user') || 'null'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const login = (loginResponse: { token: string; user: UserOutput }) => {
     const { token, user } = loginResponse;
-    console.log('User received in AuthProvider:', loginResponse);
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
     setToken(token);
     setUser(user);
-    console.log('User set in AuthProvider:', user);
-    console.log('Token set in AuthProvider:', token);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
     setToken(null);
   };
@@ -46,7 +55,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-// Define a custom hook to use the auth context
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

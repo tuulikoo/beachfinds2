@@ -5,15 +5,15 @@ import { useAuth } from '../types/AuthContext'; // Adjust the import path based 
 
 export const Navbar: React.FC = () => {
    // const authContext = useAuth(); 
-    const { user, logout } = useAuth();
+    const { user, logout} = useAuth();
     const navigate = useNavigate();
 
 
     // Logging to check the current user state
-   /* console.log("Current user:", user);
-    console.log("Current user id:", user?.id);
-    console.log("token = ", authContext.token);
-    console.log("user from token navbar = ", authContext.user);*/
+   console.log("Current user in navbar:", user);
+    console.log("Current user id in navbar:", user?.id);
+    console.log("useAuth().token in navbar = ", useAuth().token);
+    console.log("useAuth().user in navbar = ", useAuth().user);
 
     const handleLogout = () => {
         const confirmLogout = window.confirm('Confirm logout');
@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/new">Create New Note</Link>
                         </li>
-                        {user ? (
+                        { user ? (
                              <>
                              <li className="nav-item">
                                  <button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button>
