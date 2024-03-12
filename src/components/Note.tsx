@@ -42,6 +42,10 @@ export function Note() {
       .catch((error) => console.error("Error deleting post:", error));
   };
 
+  const onBackClick = () => {
+    navigate(-1);
+  };
+
 
   console.log("Note: ", note);
 
@@ -81,8 +85,8 @@ export function Note() {
             >
               Delete
             </Button>
-            <Link to="/">
-              <Button variant="outline-secondary">Back</Button>
+            <Link to="..">
+              <Button variant="outline-secondary" onClick={onBackClick} >Back</Button>
             </Link>
           </Stack>
         </Col>

@@ -48,6 +48,19 @@ export type PostData = {
       coordinates: [number, number]; 
   };
 };
+export type RawPostData = {
+  id: string;
+  title: string;
+  item_name: string;
+  description: string;
+  tags: string[];
+  filename: string;
+  category: 'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  location: {
+      type: "Point"; 
+      coordinates: [number, number]; 
+  };
+};
 
 export type RawNote = {
   id: string

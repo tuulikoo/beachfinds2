@@ -1,10 +1,10 @@
 import Map from './Map';
-import { PostData } from '../App';
+import { RawPostData } from '../App';
 import ChatInterface from './ChatInterface';
 import { useLocation } from 'react-router-dom';
 
 interface MapShowProps {
-    postData: { posts: PostData[] };
+    postData: { posts: RawPostData[] };
   }
 
   function useQuery() {
@@ -23,6 +23,7 @@ const MapShow: React.FC<MapShowProps> = ({ postData }) => {
     lat: post.location.coordinates[0],
     lng: post.location.coordinates[1],
     display_name: post.title,
+    id: post.id,
   }));
 
   const initialCenter = latParam && lngParam ? {
@@ -31,10 +32,9 @@ const MapShow: React.FC<MapShowProps> = ({ postData }) => {
      display_name: "Selected Location"
      } : locations[0];
 
-
   return (
     <div className="map-container">
-      <Map locations={locations} initialCenter = {initialCenter} />
+      <Map locations={locations} initialCenter={initialCenter} />
       <ChatInterface />
     </div>
   );

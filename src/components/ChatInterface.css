@@ -31,7 +31,9 @@
     display: block; 
   }
   
-  .button {
+  .sendButton,
+  .minimize-button,
+  .chat-icon{
     color: #ffffff;
     border: none;
     border-radius: 5px;
