@@ -6,7 +6,7 @@ import NewNote from "./components/NewNote";
 import { NoteList } from "./components/NoteList";
 import { NoteLayout } from "./components/NoteLayout";
 import { Note } from "./components/Note";
-import { EditNote } from "./components/EditNote";
+import  {EditNote} from "./components/EditNote";
 import { Navbar } from './components/Navbar';
 import {LoginForm} from "./components/LoginForm";
 import { EditUser } from "./components/EditUser";
@@ -115,11 +115,12 @@ export type RawTag = {
 function App() {
 
   //onst notes = useQuery(GET_ALL_POSTS);
-  const availableTags = useQuery(GET_ALL_TAGS);
-  const { data: postData, loading, error } = useQuery(GET_ALL_POSTS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;      
+  const { data: tagsData, loading: tagsLoading, error: tagsError } = useQuery(GET_ALL_TAGS);
+const { data: postData, loading: postsLoading, error: postsError } = useQuery(GET_ALL_POSTS);
+console.log("tagsData", tagsData);
+if (tagsLoading || postsLoading) return <p>Loading...</p>;
+if (tagsError) return <p>Error loading tags: {tagsError.message}</p>;
+if (postsError) return <p>Error loading posts: {postsError.message}</p>;
 
   return (
     <Container className="my-4">
@@ -130,10 +131,10 @@ function App() {
         <Route path="/new" element={<NewNote />} />
         <Route path="/:id" element={<NoteLayout />}>
           <Route index element={<Note />} />
-          <Route path="edit" element={<EditNote availableTags={availableTags.data}/>} /> // Extract the 'data' property from 'availableTags'
+          <Route path= "edit" element={<EditNote availableTags={tagsData.allTags}/>} /> // Extract the 'data' property from 'availableTags'
         </Route>
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/editUser" element={<EditUser />} />
+        <Route path="edit" element={<EditUser />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Container>

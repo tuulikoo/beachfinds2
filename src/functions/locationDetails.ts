@@ -39,6 +39,7 @@ const fetchFromOpenCage = async (lat:number, lng:number) => {
     throw error;
   }
 };
+//TODO: If coordinates exist in locationdetails db, do not fetch again
 
 const saveLocationDetailsToDB = async (locationDetails: LocationDetailsInput) => {
   const query = `

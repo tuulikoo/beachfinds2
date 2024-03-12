@@ -21,7 +21,6 @@ const NewNote = () => {
   return (
     <div>
       <h1>Add a new salty treasure</h1>
-      {/* Pass the fetched tags to NoteForm */}
       <NoteForm onSubmit={handleSubmit} availableTags={data.allTags} />
     </div>
   );

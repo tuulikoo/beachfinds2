@@ -1,56 +1,135 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { PostData, Tag } from "../App";
-import { NoteForm } from "./NoteForm";
-import { useNote } from "./NoteLayout";
-import { UPDATE_POST, CREATE_TAG } from "../operations/mutations";
-import { useMutation } from "@apollo/client";
-// Import your mutations from operations/mutations
-// import { UPDATE_NOTE_MUTATION, CREATE_TAG_MUTATION } from "../operations/mutations";
+import { useState, useEffect } from 'react';
+import { Form, Button, Col, Row } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
+import CreatableSelect from 'react-select/creatable';
+import { GET_POST_BY_ID } from '../operations/queries';
+import { UPDATE_POST } from '../operations/mutations';
+import { Tag } from '../types/DBtypes';
+
+// Define a type for the select options
+type SelectOption = { label: string; value: string };
 
 type EditNoteProps = {
   availableTags: Tag[];
-};
+}
 
-export function EditNote({ availableTags }: EditNoteProps) {
-  const note = useNote();
+export const EditNote = ({availableTags}:EditNoteProps) => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [updateNoteMutation] = useMutation(UPDATE_POST);
-  const [createTagMutation] = useMutation(CREATE_TAG);
+  const [updateNote] = useMutation(UPDATE_POST);
+  const { data, loading, error } = useQuery(GET_POST_BY_ID, { variables: { id } });
+  
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [item_name, setItemName] = useState('');
+  const [category, setCategory] = useState('');
+  
+  const [selectedTags, setSelectedTags] = useState<SelectOption[]>([]);
 
-  // Placeholder function to handle note submission
-  const onSubmit = async (noteData: PostData) => {
-    // Here you would call your update note mutation with the updated note data
-    console.log("Submitting edited note data:", noteData);
-    const response = await updateNoteMutation({ variables: { id: note.id, data: noteData } });
-    console.log(response);
-    navigate("/");
+  const tagOptions = availableTags.map((tag) => ({
+    label: tag.label,
+    value: tag.id,
+  }));
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [initialData, setInitialData] = useState({
+    title: '',
+    description: '',
+    item_name: '',
+    category: '',
+    tags: [] as SelectOption[],
+  });
+
+  useEffect(() => {
+    if (data && data.postById) {
+      const post = data.postById;
+      const fetchedTags = post.tags.map((tag: Tag) => ({ label: tag.label, value: tag.id }));
+      setTitle(post.title);
+      setDescription(post.description);
+      setItemName(post.item_name);
+      setCategory(post.category);
+      setSelectedTags(fetchedTags);
+      setInitialData({
+        title: post.title,
+        description: post.description,
+        item_name: post.item_name,
+        category: post.category,
+        tags: fetchedTags,
+      });
+    }
+  }, [data]);
+  
+
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    const tagIds = selectedTags.map(tag => tag.value); // Convert selectedTags back to an array of tag ids
+    try {
+      await updateNote({
+        variables: {
+          id,
+          input: {
+            title,
+            description,
+            item_name,
+            category,
+            tags: tagIds,
+          },
+        },
+      });
+      navigate(-1); 
+    } catch (error) {
+      console.error('Failed to update note:', error);
+    }
   };
 
-  // Placeholder function to handle adding a new tag
-  const onAddTag = async (label: string) => {
-    // Here you would call your create tag mutation
-    console.log("Adding new tag:", label);
-    const response = await createTagMutation({ variables: { label } });
-    console.log(response);
-    
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
       <h1 className="mb-4">Edit Note</h1>
-      <NoteForm
-        title={note.title}
-        description={note.description}
-        tags={note.tags.map(tag => tag.id)} // Convert to string[] if necessary
-        item_name={note.item_name}
-        filename={note.filename}
-        category={note.category}
-        location={note.location}
-        onSubmit={onSubmit}
-        onAddTag={onAddTag}
-        availableTags={availableTags}
-      />
+      <Form onSubmit={handleSubmit}>
+        {/* Similar setup for other form fields */}
+        <Form.Group as={Row} controlId="title">
+          <Form.Label column sm={2}>Title</Form.Label>
+          <Col sm={10}>
+            <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          </Col>
+        </Form.Group>
+        {/* Repeat for other fields like description, item_name, etc. */}
+        <Form.Group as={Row} controlId="tags">
+          <Form.Label column sm={2}>Tags</Form.Label>
+          <Col sm={10}>
+            <CreatableSelect
+              isMulti
+              onChange={(value) => setSelectedTags(value as SelectOption[])}
+              options={tagOptions.map((tag) => ({
+                label: tag.label,
+                value: tag.value.toString(),
+              }))}
+              value={selectedTags}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId="item_name">
+          <Form.Label column sm={2}>Item name</Form.Label>
+          <Col sm={10}>
+            <Form.Control type="text" value={item_name} onChange={(e) => setItemName(e.target.value)} />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId="description">
+          <Form.Label column sm={2}>Description</Form.Label>
+          <Col sm={10}>
+            <Form.Control type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+          </Col>
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Update Note
+        </Button>
+      </Form>
     </>
   );
-}
+};
+export default EditNote;

@@ -130,6 +130,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
       }
 
       await onSubmit(newPost);
+
       navigate("..");
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -199,7 +200,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
           <Button type="submit" variant="primary">
             Save
           </Button>
-          <Link to="..">
+          <Link to="/">
             <Button type="button" variant="outline-secondary">
               Cancel
             </Button>

@@ -61,6 +61,7 @@ export const GET_ALL_POSTS = gql`
     posts {
       id
       title
+      item_name
       description
       category
       filename
@@ -88,6 +89,8 @@ export const GET_POST_BY_ID = gql`
       title
       description
       category
+      item_name
+      filename
       owner {
         id
         user_name

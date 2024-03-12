@@ -73,7 +73,7 @@ export function Note() {
         </Col>
         <Col xs="auto">
           <Stack gap={2} direction="horizontal">
-            <Link to={`/edit/${note.id}`}>
+            <Link to={`/${note.id}/edit`}>
               <Button variant="primary" disabled={!token}>
                 Edit
               </Button>
