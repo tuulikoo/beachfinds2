@@ -12,8 +12,7 @@
     "preview": "vite preview",
     "start:backend": "node --loader ts-node/esm src/server.ts",
     "dev:backend": "nodemon --exec 'ts-node -T --project tsconfig.node.json' src/server.ts",
-    "dev:backend2": "tsx src/server.ts",
-    "start": "node dist/src/index.js"
+    "dev:backend2": "tsx src/server.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
