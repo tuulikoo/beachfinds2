@@ -8,6 +8,10 @@ import { useAuth } from "../types/AuthContext";
 
 
 export function Note() {
+//import REACT_APP_IMAGE_URL=http://localhost:3002/api/v1/upload/ from .env
+const imgUrl = import.meta.env.REACT_APP_IMAGE_URL;
+console.log("Image URL: ", imgUrl);
+
   const [deletePost] = useMutation(DELETE_POST);
   const note = useNote();
   const navigate = useNavigate();

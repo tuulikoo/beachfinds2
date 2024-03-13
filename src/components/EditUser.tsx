@@ -1,10 +1,13 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
-import { UPDATE_USER } from "../operations/mutations";
+import { DELETE_USER, UPDATE_USER } from "../operations/mutations";
 import { GET_USER_DETAILS } from "../operations/queries";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../types/AuthContext";
+import AllUsers from "./AllUsers";
+
+
 
 
 
@@ -29,11 +32,20 @@ export const EditUser: React.FC = () => {
     const { user } = useAuth();
     const userId = user?.id;
     console.log("userid in editing", userId)
+    const { logout} = useAuth();
+    const [showAllUsersModal, setShowAllUsersModal] = useState(false);
 
 
     const { loading: fetchLoading, error: fetchError, data: fetchUserData } = useQuery(GET_USER_DETAILS, {
         variables: { id: userId }, // Pass userId as a variable to the query
       });
+    
+      const[isAdmin, setIsAdmin] = useState(false);
+      useEffect(() => {
+        if(user?.email === "admin@admin.fi"){
+          setIsAdmin(true);
+        }
+      }, [user?.email]);
 
     useEffect(() => {
     if (fetchUserData && fetchUserData.getCurrentUser) {
@@ -45,6 +57,8 @@ export const EditUser: React.FC = () => {
 const [updateUserDetails, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_USER, {
     refetchQueries: [{ query: GET_USER_DETAILS, variables: { id: userId } }],
 });
+
+const [deleteUser] = useMutation(DELETE_USER);
     const navigate = useNavigate();
 
     const handleSubmit = (event: FormEvent) => {
@@ -91,6 +105,22 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
         });
     };
     
+
+    const handleDeleteAccount = async () => {
+        if (window.confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+          try {
+            await deleteUser({
+              variables: { id: userId },
+            });
+            // Perform any post-deletion cleanup here, like logging the user out
+            logout();
+            navigate("/login");
+            alert("Account deleted successfully");
+          } catch (error) {
+            console.error("Error deleting account:", error);
+          }
+        }
+      };
 
     return (
         <Container className="mt-5">
@@ -159,9 +189,21 @@ const [updateUserDetails, { loading: updateLoading, error: updateError }] = useM
                                 {updateLoading ? 'Updating...' : 'Save'}
                             </Button>
                         )}
+                        <Button variant="danger" onClick={handleDeleteAccount}>
+                            Delete Account
+                        </Button>
                     </Form>
                 </Col>
             </Row>
+            {isAdmin && (
+                <Button variant="primary" onClick={() => setShowAllUsersModal(true)}>
+                    Show all users
+                </Button>
+            )}
+            {showAllUsersModal && (
+                <AllUsers show={showAllUsersModal} handleClose={() => setShowAllUsersModal(false)} />
+            )}
         </Container>
+        
     );
 };

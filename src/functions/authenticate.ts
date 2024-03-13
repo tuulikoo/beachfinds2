@@ -25,13 +25,12 @@ export default async (req: Request): Promise<MyContext> => {
       if (!userFromToken) {
         return {};
       }
-      // add token to user object so we can use it in resolvers
+      
       const tokenContent: TokenContent = {
         token: token,
         user: userFromToken,
       };
 
-      console.log('user from token', tokenContent.user);
       return {userdata: tokenContent};
     } catch (error) {
       return {};

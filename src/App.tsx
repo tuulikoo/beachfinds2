@@ -1,21 +1,19 @@
 //App.tsx
-import "bootstrap/dist/css/bootstrap.min.css"
-import { Routes, Route, Navigate } from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import NewNote from "./components/NewNote";
 import { NoteList } from "./components/NoteList";
 import { NoteLayout } from "./components/NoteLayout";
 import { Note } from "./components/Note";
-import  {EditNote} from "./components/EditNote";
-import { Navbar } from './components/Navbar';
-import {LoginForm} from "./components/LoginForm";
+import { EditNote } from "./components/EditNote";
+import { Navbar } from "./components/Navbar";
+import { LoginForm } from "./components/LoginForm";
 import { EditUser } from "./components/EditUser";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_TAGS, GET_ALL_POSTS } from "./operations/queries";
 import MapShow from "./components/MapComponent";
-
-
-
+import { AllUsers } from "./components/AllUsers";
 
 export type User = {
   id: string;
@@ -23,14 +21,14 @@ export type User = {
   email: string;
   country: string;
   city: string;
-  contact: 'yes' | 'no';
-  role: 'user' | 'admin';
+  contact: "yes" | "no";
+  role: "user" | "admin";
   password: string;
 };
 
 export type Note = {
-  id: string
-} &NoteData
+  id: string;
+} & NoteData;
 
 export type GetAllNotesQueryData = {
   posts: Note[];
@@ -42,10 +40,10 @@ export type PostData = {
   description: string;
   tags: string[];
   filename: string;
-  category: 'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  category: "Shells" | "Seaglass" | "Fossils" | "Stones" | "Driftwood" | "Misc";
   location: {
-      type: "Point"; 
-      coordinates: [number, number]; 
+    type: "Point";
+    coordinates: [number, number];
   };
 };
 export type RawPostData = {
@@ -55,29 +53,11 @@ export type RawPostData = {
   description: string;
   tags: string[];
   filename: string;
-  category: 'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
-  location: {
-      type: "Point"; 
-      coordinates: [number, number]; 
-  };
-};
-
-export type RawNote = {
-  id: string
-} &RawNoteData
-
-export type RawNoteData = {
-  title: string;
-  item_name: string;
-  description: string;
-  filename: string; // Optional property for image name
-  category:'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
-  owner: string | User
+  category: "Shells" | "Seaglass" | "Fossils" | "Stones" | "Driftwood" | "Misc";
   location: {
     type: "Point";
     coordinates: [number, number];
   };
-  tags: string[];
 };
 
 export type NoteData = {
@@ -87,14 +67,13 @@ export type NoteData = {
   description: string;
   tags: Tag[];
   filename: string; // Optional property for image name
-  category:'Shells' | 'Seaglass' | 'Fossils' | 'Stones' | 'Driftwood' | 'Misc';
+  category: "Shells" | "Seaglass" | "Fossils" | "Stones" | "Driftwood" | "Misc";
   owner: User;
   location: {
     type: "Point";
     coordinates: [number, number];
   };
 };
-
 
 export type UserData = {
   title: string;
@@ -104,23 +83,29 @@ export type UserData = {
 };
 
 export type Tag = {
-  id: string
-  label: string
-}
+  id: string;
+  label: string;
+};
 
 export type RawTag = {
-  id: string
-}
+  id: string;
+};
 
 function App() {
-
-  //onst notes = useQuery(GET_ALL_POSTS);
-  const { data: tagsData, loading: tagsLoading, error: tagsError } = useQuery(GET_ALL_TAGS);
-const { data: postData, loading: postsLoading, error: postsError } = useQuery(GET_ALL_POSTS);
-console.log("tagsData", tagsData);
-if (tagsLoading || postsLoading) return <p>Loading...</p>;
-if (tagsError) return <p>Error loading tags: {tagsError.message}</p>;
-if (postsError) return <p>Error loading posts: {postsError.message}</p>;
+  const {
+    data: tagsData,
+    loading: tagsLoading,
+    error: tagsError,
+  } = useQuery(GET_ALL_TAGS);
+  const {
+    data: postData,
+    loading: postsLoading,
+    error: postsError,
+  } = useQuery(GET_ALL_POSTS);
+  console.log("tagsData", tagsData);
+  if (tagsLoading || postsLoading) return <p>Loading...</p>;
+  if (tagsError) return <p>Error loading tags: {tagsError.message}</p>;
+  if (postsError) return <p>Error loading posts: {postsError.message}</p>;
 
   return (
     <Container className="my-4">
@@ -131,11 +116,16 @@ if (postsError) return <p>Error loading posts: {postsError.message}</p>;
         <Route path="/new" element={<NewNote />} />
         <Route path="/:id" element={<NoteLayout />}>
           <Route index element={<Note />} />
-          <Route path= "edit" element={<EditNote availableTags={tagsData.allTags}/>} /> // Extract the 'data' property from 'availableTags'
+          <Route
+            path="edit"
+            element={<EditNote availableTags={tagsData.allTags} />}
+          />{" "}
+          // Extract the 'data' property from 'availableTags'
         </Route>
         <Route path="/login" element={<LoginForm />} />
-        <Route path="edit" element={<EditUser />} />
+        <Route path="/editUser" element={<EditUser />} />
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/Users" element={<AllUsers />} />
       </Routes>
     </Container>
   );

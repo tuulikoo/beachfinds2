@@ -14,7 +14,7 @@ export const GET_USER_DETAILS = gql`
 `;
 
 export const GET_ALL_USERS = gql`
-  query GetAllUsers {
+  query Users {
     users {
       id
       email
@@ -48,6 +48,7 @@ export const CHECK_TOKEN = gql`
         id
         user_name
         email
+        role
         country
         city
         contact

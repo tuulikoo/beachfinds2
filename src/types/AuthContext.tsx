@@ -1,11 +1,11 @@
 // AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { UserOutput } from './DBtypes'; // Ensure this path matches your project structure
+import { LoginUser } from './DBtypes'; // Ensure this path matches your project structure
 
 interface AuthContextType {
-  user: UserOutput | null;
+  user: LoginUser | null;
   token: string | null;
-  login: (data: { token: string; user: UserOutput }) => void;
+  login: (data: { token: string; user: LoginUser }) => void;
   logout: () => void;
 }
 
@@ -16,7 +16,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserOutput | null>(JSON.parse(localStorage.getItem('user') || 'null'));
+  const [user, setUser] = useState<LoginUser | null>(JSON.parse(localStorage.getItem('user') || 'null'));
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
   }, []);
 
-  const login = (loginResponse: { token: string; user: UserOutput }) => {
+  const login = (loginResponse: { token: string; user: LoginUser }) => {
     const { token, user } = loginResponse;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
