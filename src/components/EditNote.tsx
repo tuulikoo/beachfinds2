@@ -41,6 +41,7 @@ export const EditNote = ({ availableTags }: EditNoteProps) => {
     category: "",
     tags: [] as SelectOption[],
   });
+  console.log(initialData);
 
   useEffect(() => {
     if (data && data.postById) {
