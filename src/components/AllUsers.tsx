@@ -21,7 +21,7 @@ const AllUsers: React.FC<AllUsersProps> = ({ show, handleClose }) => {
             try {
                 await deleteUser({
                     variables: { id },
-                    refetchQueries: [{ query: GET_ALL_USERS }], // Refetch all users after deletion
+                    refetchQueries: [{ query: GET_ALL_USERS }], 
                 });
                 alert('User deleted successfully');
             } catch (error) {
