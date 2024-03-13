@@ -13,7 +13,7 @@
     "start:backend": "node --loader ts-node/esm src/server.ts",
     "dev:backend": "nodemon --exec 'ts-node -T --project tsconfig.node.json' src/server.ts",
     "dev:backend2": "tsx src/server.ts",
-    "start": "dist/src/server.js"
+    "start": "node dist/src/server.js"
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
