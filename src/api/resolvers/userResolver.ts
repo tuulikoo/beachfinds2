@@ -79,29 +79,37 @@ export default {
         body: JSON.stringify(args.user),
       });
     },
-    deleteUser: async (_parent: undefined, _args: undefined, context: MyContext) => {
+    deleteUser: async (
+      _parent: undefined,
+      _args: undefined,
+      context: MyContext
+    ) => {
       isLoggedIn(context);
-      
-      try {
 
-        const deleteUserResponse = await fetchData<UserResponse>(`${process.env.AUTH_URL}/users`, {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${context.userdata?.token}`,
-          },
-        });
+      try {
+        const deleteUserResponse = await fetchData<UserResponse>(
+          `${process.env.AUTH_URL}/users`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${context.userdata?.token}`,
+            },
+          }
+        );
         if (deleteUserResponse && deleteUserResponse.user) {
           await postModel.deleteMany({ owner: context.userdata?.user.id });
           return deleteUserResponse;
         } else {
-          throw new GraphQLError("Failed to delete user from authentication server.");
+          throw new GraphQLError(
+            "Failed to delete user from authentication server."
+          );
         }
       } catch (error) {
         console.error("Error during user and post deletion:", error);
         throw new GraphQLError("Error during user and post deletion process.");
       }
     },
-    
+
     updateUserAsAdmin: async (
       _parent: undefined,
       args: { user: UserOutput; id: string },
@@ -147,5 +155,3 @@ export default {
     },
   },
 };
-
-

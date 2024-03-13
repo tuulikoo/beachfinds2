@@ -1,5 +1,5 @@
-import { Post } from '../../types/DBtypes';
-import tagModel from '../models/tagModel';
+import { Post } from "../../types/DBtypes";
+import tagModel from "../models/tagModel";
 
 export const tagResolver = {
   Post: {
@@ -8,7 +8,9 @@ export const tagResolver = {
     },
   },
   Query: {
-    allTags: async () => {return await tagModel.find();},
+    allTags: async () => {
+      return await tagModel.find();
+    },
     tagById: async (_parent: undefined, { id }: { id: string }) => {
       return await tagModel.findById(id);
     },
@@ -16,24 +18,30 @@ export const tagResolver = {
 
   Mutation: {
     createTag: async (_parent: undefined, { label }: { label: string }) => {
-
       const existingTag = await tagModel.findOne({ label });
-  
+
       if (existingTag) {
         return existingTag;
       } else {
         return await tagModel.create({ label });
       }
     },
-    updateTag: async (_parent: undefined, { id, label }: { id: string; label: string }) => {
-      const updatedTag = await tagModel.findByIdAndUpdate(id, { label }, { new: true });
+    updateTag: async (
+      _parent: undefined,
+      { id, label }: { id: string; label: string }
+    ) => {
+      const updatedTag = await tagModel.findByIdAndUpdate(
+        id,
+        { label },
+        { new: true }
+      );
       if (!updatedTag) {
         throw new Error(`Tag with ID ${id} not found`);
       }
       return updatedTag;
-    },  
+    },
     deleteTag: async (_parent: undefined, { id }: { id: string }) => {
       return await tagModel.findByIdAndDelete(id);
-    }
-  }
+    },
+  },
 };

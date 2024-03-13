@@ -3,14 +3,16 @@ import { useNote } from "./NoteLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { DELETE_POST } from "../operations/mutations";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_ALL_POSTS, GET_LOCATION_BY_COORDINATES } from "../operations/queries";
+import {
+  GET_ALL_POSTS,
+  GET_LOCATION_BY_COORDINATES,
+} from "../operations/queries";
 import { useAuth } from "../types/AuthContext";
 
-
 export function Note() {
-//import REACT_APP_IMAGE_URL=http://localhost:3002/api/v1/upload/ from .env
-const imgUrl = import.meta.env.REACT_APP_IMAGE_URL;
-console.log("Image URL: ", imgUrl);
+  //import REACT_APP_IMAGE_URL=http://localhost:3002/api/v1/upload/ from .env
+  const imgUrl = import.meta.env.REACT_APP_IMAGE_URL;
+  console.log("Image URL: ", imgUrl);
 
   const [deletePost] = useMutation(DELETE_POST);
   const note = useNote();
@@ -20,11 +22,16 @@ console.log("Image URL: ", imgUrl);
   const allNotes = useQuery(GET_ALL_POSTS);
   console.log("All notes: ", allNotes);
 
-  const coordinatesDefined = note && note.location && note.location.coordinates.length === 2;
+  const coordinatesDefined =
+    note && note.location && note.location.coordinates.length === 2;
   const lat = coordinatesDefined ? note.location.coordinates[0] : null;
   const lng = coordinatesDefined ? note.location.coordinates[1] : null;
 
-  const { data: locationData, loading: locationLoading, error: locationError } = useQuery(GET_LOCATION_BY_COORDINATES, {
+  const {
+    data: locationData,
+    loading: locationLoading,
+    error: locationError,
+  } = useQuery(GET_LOCATION_BY_COORDINATES, {
     variables: { lat, lng },
     skip: !coordinatesDefined, // Skip the query if coordinates are not defined
   });
@@ -33,7 +40,8 @@ console.log("Image URL: ", imgUrl);
   if (locationLoading) return <div>Loading...</div>;
   if (locationError) return <div>Error! {locationError.message}</div>;
 
-  const { continent, country, state, town } = locationData.locationByCoordinates;
+  const { continent, country, state, town } =
+    locationData.locationByCoordinates;
 
   const onDelete = (id: string) => {
     deletePost({
@@ -49,7 +57,6 @@ console.log("Image URL: ", imgUrl);
   const onBackClick = () => {
     navigate(-1);
   };
-
 
   console.log("Note: ", note);
 
@@ -90,7 +97,9 @@ console.log("Image URL: ", imgUrl);
               Delete
             </Button>
             <Link to="..">
-              <Button variant="outline-secondary" onClick={onBackClick} >Back</Button>
+              <Button variant="outline-secondary" onClick={onBackClick}>
+                Back
+              </Button>
             </Link>
           </Stack>
         </Col>
@@ -107,14 +116,16 @@ console.log("Image URL: ", imgUrl);
           </Col>
         </Row>
       )}
-     {locationData && locationData.locationByCoordinates && (
-      <Row className="mt-4">
-        <Col>
-          <p>Location: {town}, {state}, {country}</p>
-          <p>Continent: {continent}</p>
-        </Col>
-      </Row>
-    )}
+      {locationData && locationData.locationByCoordinates && (
+        <Row className="mt-4">
+          <Col>
+            <p>
+              Location: {town}, {state}, {country}
+            </p>
+            <p>Continent: {continent}</p>
+          </Col>
+        </Row>
+      )}
     </>
   );
 }

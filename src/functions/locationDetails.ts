@@ -1,19 +1,19 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Define your GraphQL endpoint
-const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql'; // Adjust this to your actual GraphQL server endpoint
+const GRAPHQL_ENDPOINT = "http://localhost:3000/graphql"; // Adjust this to your actual GraphQL server endpoint
 
 type LocationDetailsInput = {
-    lat: number
-    lng: number
-    continent: string
-    country: string
-    state: string
-    town: string
-  }
+  lat: number;
+  lng: number;
+  continent: string;
+  country: string;
+  state: string;
+  town: string;
+};
 
-const fetchFromOpenCage = async (lat:number, lng:number) => {
-  const apiKey = '88804a8245c24555a671aaf4b1b6e87c'; // Replace with your actual OpenCage API key
+const fetchFromOpenCage = async (lat: number, lng: number) => {
+  const apiKey = "88804a8245c24555a671aaf4b1b6e87c"; // Replace with your actual OpenCage API key
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
 
   try {
@@ -29,19 +29,21 @@ const fetchFromOpenCage = async (lat:number, lng:number) => {
         lat: lat,
         lng: lng,
       };
-      console.log('Location details:', locationDetails);
+      console.log("Location details:", locationDetails);
       await saveLocationDetailsToDB(locationDetails); // Call the function to save details to DB
     } else {
-      throw new Error('No results found');
+      throw new Error("No results found");
     }
   } catch (error) {
-    console.error('Error fetching location details:', error);
+    console.error("Error fetching location details:", error);
     throw error;
   }
 };
 //TODO: If coordinates exist in locationdetails db, do not fetch again
 
-const saveLocationDetailsToDB = async (locationDetails: LocationDetailsInput) => {
+const saveLocationDetailsToDB = async (
+  locationDetails: LocationDetailsInput
+) => {
   const query = `
     mutation CreateLocationDetail($input: LocationDetailsInput!) {
       createLocationDetail(input: $input) {
@@ -60,31 +62,36 @@ const saveLocationDetailsToDB = async (locationDetails: LocationDetailsInput) =>
     input: locationDetails,
   };
 
-  console.log('Sending mutation:', query, 'with variables:', variables);
+  console.log("Sending mutation:", query, "with variables:", variables);
 
   try {
-    
-
-    const response = await axios.post(GRAPHQL_ENDPOINT, {
-      query,
-      variables,
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axios.post(
+      GRAPHQL_ENDPOINT,
+      {
+        query,
+        variables,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    console.log('Response:', response.data);
+    console.log("Response:", response.data);
 
     if (response.data.errors) {
-      console.error('GraphQL errors:', response.data.errors);
-      throw new Error('Failed to save location details due to GraphQL errors');
+      console.error("GraphQL errors:", response.data.errors);
+      throw new Error("Failed to save location details due to GraphQL errors");
     } else {
-      console.log('Location details saved successfully:', response.data.data.createLocationDetails);
+      console.log(
+        "Location details saved successfully:",
+        response.data.data.createLocationDetails
+      );
       return response.data.data.createLocationDetails;
     }
   } catch (error) {
-    console.error('Error saving location details to DB:', error);
+    console.error("Error saving location details to DB:", error);
     throw error;
   }
 };

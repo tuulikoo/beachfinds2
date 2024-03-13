@@ -23,10 +23,8 @@ type Query {
   locationById(id: ID!): LocationDetails
   allLocations: [LocationDetails!]!
   locationByCoordinates(lat: Float!, lng: Float!): LocationDetails
-
 }
 
 type Mutation {
   createLocationDetail(input: LocationDetailsInput): LocationDetails
-  
 }
