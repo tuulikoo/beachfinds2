@@ -8,7 +8,6 @@ import { PostData, Tag } from "../App";
 import { useAuth } from "../types/AuthContext";
 import { fetchFromOpenCage } from "../functions/locationDetails";
 
-
 type NoteFormProps = {
   onSubmit: (noteData: PostData, newTags?: SelectOption[]) => void;
   onAddTag?: (label: string) => void;
@@ -96,7 +95,10 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
       const uploadResult = await uploadResponse.json();
       console.log("Upload successful", uploadResult);
       console.log("filename in uploadResult: ", uploadResult.data.filename);
-      console.log("coordinates in uploadResult: ", uploadResult.data.location.coordinates);
+      console.log(
+        "coordinates in uploadResult: ",
+        uploadResult.data.location.coordinates
+      );
       const imgcoordinates: number[] = uploadResult.data.location.coordinates;
       const finalFilename: string = `${uploadResult.data.filename}.png`;
 
@@ -121,7 +123,11 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
         },
       };
       console.log("New post: ", newPost);
-      console.log("Calling processLocationDetails with coordinates:", imgcoordinates[0], imgcoordinates[1]);
+      console.log(
+        "Calling processLocationDetails with coordinates:",
+        imgcoordinates[0],
+        imgcoordinates[1]
+      );
       try {
         await fetchFromOpenCage(imgcoordinates[0], imgcoordinates[1]);
         console.log("Location details processed successfully.");

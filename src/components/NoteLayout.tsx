@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_POSTS } from "../operations/queries";
-import { Note } from "../App"; // Ensure this import is correct based on where your Note type is defined
+import { Note } from "../App";
 
 export function NoteLayout() {
   const { id } = useParams();

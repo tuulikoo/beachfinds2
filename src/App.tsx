@@ -13,7 +13,6 @@ import { EditUser } from "./components/EditUser";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_TAGS, GET_ALL_POSTS } from "./operations/queries";
 import MapShow from "./components/MapComponent";
-import { AllUsers } from "./components/AllUsers";
 
 export type User = {
   id: string;
@@ -125,7 +124,6 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/editUser" element={<EditUser />} />
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/Users" element={<AllUsers />} />
       </Routes>
     </Container>
   );
