@@ -26,7 +26,8 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           npm install
-          npm run build:backend --if-present
+          npx vite build
+          npm run build:backend
           rm -rf test
           rm -rf src
 

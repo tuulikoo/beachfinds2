@@ -19,6 +19,7 @@ import { MyContext } from "./types/MyContext";
 import axios from "axios";
 import { MessageResponse } from "./types/MessageTypes";
 
+
 const app = express();
 
 app.use(
@@ -28,9 +29,10 @@ app.use(
   })
 );
 
-app.use(express.static("public"));
+app.use(express.static('.'));
+
 app.use(express.json()); // Make sure to use this middleware to parse JSON request bodies
-app.use(cors({ origin: "http://localhost:5173" }));
+//app.use(cors({ origin: "http://localhost:5173" }));
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 const mongoConnect = async () => {
