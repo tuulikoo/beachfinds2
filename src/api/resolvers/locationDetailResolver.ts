@@ -1,5 +1,5 @@
-import { LocationDetails } from '../../types/DBtypes';
-import locationsModel from '../models/locationsModel';
+import { LocationDetails } from "../../types/DBtypes";
+import locationsModel from "../models/locationsModel";
 
 export const locationResolver = {
   Query: {
@@ -20,7 +20,7 @@ export const locationResolver = {
   Mutation: {
     createLocationDetail: async (
       _parent: undefined,
-      { input }: { input: Omit<LocationDetails, 'id'> }
+      { input }: { input: Omit<LocationDetails, "id"> }
     ) => {
       return await locationsModel.create(input);
     },
