@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:backend": "tsc -p tsconfig.node.json",
+    "build:backend": "tsc -p tsconfig.node.json && npm run copy:graphql",
+    "copy:graphql": "copyfiles -u 1 \"src/**/*.graphql\" dist/src",
     "build": "npm run build:backend && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start:backend": "node --loader ts-node/esm src/server.ts",
     "dev:backend": "nodemon --exec 'ts-node -T --project tsconfig.node.json' src/server.ts",
-    "dev:backend2": "tsx src/server.ts"
+    "dev:backend2": "tsx src/server.ts",
+    "start": "node dist/src/index.js"
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
@@ -55,6 +57,7 @@
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "@vitejs/plugin-react": "^4.2.1",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
