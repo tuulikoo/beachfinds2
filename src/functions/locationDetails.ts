@@ -14,8 +14,7 @@ type LocationDetailsInput = {
 };
 
 const fetchFromOpenCage = async (lat: number, lng: number) => {
-  const apiKey = process.env.OPENCAGE_API_KEY;
-  console.log("API Key:", apiKey);
+  const apiKey = "88804a8245c24555a671aaf4b1b6e87c";
   
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
 
@@ -23,7 +22,7 @@ const fetchFromOpenCage = async (lat: number, lng: number) => {
     const response = await axios.get(url);
     if (response.data && response.data.results.length > 0) {
       const result = response.data.results[0];
-      // Extract the details you need from the result
+
       const locationDetails = {
         continent: result.components.continent || 'Unknown Continent',
         country: result.components.country || 'Unknown Country',
