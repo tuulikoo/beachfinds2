@@ -16,7 +16,7 @@ export function Note() {
   const [deletePost] = useMutation(DELETE_POST);
   const note = useNote();
   const navigate = useNavigate();
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   
   const [isAuthorized, setIsAuthorized] = useState(false);
   useEffect(() => {
