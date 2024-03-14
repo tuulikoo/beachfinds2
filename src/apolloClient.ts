@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client';
 
-const httpLink = new HttpLink({ uri: 'http://localhost:3000/graphql' });
+const httpLink = new HttpLink({ uri: 'tuulikiv-beachfinds.azurewebsites.net/graphql' });
 
 const authLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem('token');
