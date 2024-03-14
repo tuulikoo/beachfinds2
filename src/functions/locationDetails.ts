@@ -23,10 +23,10 @@ const fetchFromOpenCage = async (lat: number, lng: number) => {
       const result = response.data.results[0];
       // Extract the details you need from the result
       const locationDetails = {
-        continent: result.components.continent,
-        country: result.components.country,
-        state: result.components.state,
-        town: result.components.town,
+        continent: result.components.continent || 'Unknown Continent',
+        country: result.components.country || 'Unknown Country',
+        state: result.components.state || 'Unknown State',
+        town: result.components.town || 'Unknown Town',
         lat: lat,
         lng: lng,
       };
