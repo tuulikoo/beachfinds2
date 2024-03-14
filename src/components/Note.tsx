@@ -107,7 +107,7 @@ export function Note() {
         <Row className="mt-4">
           <Col>
             <img
-              src={`beachfinds-uploadserver.azurewebsites.net/api/v1/upload/${note.filename}`}
+              src={`http://beachfinds-uploadserver.azurewebsites.net/api/v1/upload/${note.filename}`}
               alt={note.item_name}
               style={{ maxWidth: "100%" }}
             />

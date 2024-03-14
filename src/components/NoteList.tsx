@@ -166,7 +166,7 @@ export function NoteList() {
   );
 }
 function NoteCard({ id, title, tags, item_name, filename }: SimplifiedNote) {
-  const imageUrl = `beachfinds-uploadserver.azurewebsites.net/api/v1/upload/${filename}`;
+  const imageUrl = `http://beachfinds-uploadserver.azurewebsites.net/api/v1/upload/${filename}`;
   return (
     <Card
       as={Link}
