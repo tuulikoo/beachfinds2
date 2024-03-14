@@ -1,4 +1,5 @@
 import axios from "axios";
+import "dotenv/config";
 
 // Define your GraphQL endpoint tuulikiv-beachfinds.azurewebsites.net/graphql OR localhost:3000/graphql
 const GRAPHQL_ENDPOINT = "https://tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
@@ -13,8 +14,9 @@ type LocationDetailsInput = {
 };
 
 const fetchFromOpenCage = async (lat: number, lng: number) => {
-  const apiKey = process.env.OPENCAGE_API_KEY; // Replace with your OpenCage API key
-  console.log("Open cage API key:", apiKey);
+  const apiKey = process.env.OPENCAGE_API_KEY;
+  console.log("API Key:", apiKey);
+  
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
 
   try {
