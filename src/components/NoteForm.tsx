@@ -79,6 +79,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
     try {
       const uploadResponse = await fetch(
         `https://beachfinds-uploadserver.azurewebsites.net/api/v1/upload/`,
+        //`http://localhost:3002/api/v1/upload/`,
         {
           method: "POST",
           body: formData,
@@ -93,12 +94,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
       }
 
       const uploadResult = await uploadResponse.json();
-      console.log("Upload successful", uploadResult);
-      console.log("filename in uploadResult: ", uploadResult.data.filename);
-      console.log(
-        "coordinates in uploadResult: ",
-        uploadResult.data.location.coordinates
-      );
+    
       const imgcoordinates: number[] = uploadResult.data.location.coordinates;
       const finalFilename: string = `${uploadResult.data.filename}.png`;
 

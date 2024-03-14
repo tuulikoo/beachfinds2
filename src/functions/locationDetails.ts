@@ -1,7 +1,7 @@
 import axios from "axios";
 // Define your GraphQL endpoint tuulikiv-beachfinds.azurewebsites.net/graphql OR localhost:3000/graphql
-const GRAPHQL_ENDPOINT = "https://tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
-
+//const GRAPHQL_ENDPOINT = "https://localhost:3000/graphql"; // Adjust this to your actual GraphQL server endpoint
+const GRAPHQL_ENDPOINT = "https://tuulikiv-beachfinds.azurewebsites.net/graphql";
 type LocationDetailsInput = {
   lat: number;
   lng: number;
@@ -11,7 +11,48 @@ type LocationDetailsInput = {
   town: string;
 };
 
+const checkCoordinatesExist = async (lat: number, lng: number): Promise<boolean> => {
+  const query = `
+    query LocationByCoordinates($lat: Float!, $lng: Float!) {
+      locationByCoordinates(lat: $lat, lng: $lng) {
+        id
+      }
+    }
+  `;
+
+
+  const variables = { lat, lng };
+  console.log("Sending query:", query, "with variables:", variables)
+
+  try {
+    const response = await axios.post(
+      GRAPHQL_ENDPOINT,
+      {
+        query,
+        variables,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const locationData = response.data.locationByCoordinates;
+    console.log("_____________Location**** data:", locationData);
+    return !!locationData;
+  } catch (error) {
+    console.error("Error checking coordinates existence:", error);
+    return false; // Assume coordinates do not exist on error, or handle as needed
+  }
+};
+
 const fetchFromOpenCage = async (lat: number, lng: number) => {
+  const exists = await checkCoordinatesExist(lat, lng);
+  console.log("***************Coordinates exist: ", exists)
+  if (exists) {
+    console.log('Coordinates already exist in the database, skipping OpenCage fetch.');
+    return;
+  }
+
   const apiKey = "88804a8245c24555a671aaf4b1b6e87c";
   
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;

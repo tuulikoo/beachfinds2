@@ -34,7 +34,6 @@ export function Note() {
     skip: !coordinatesDefined, // Skip the query if coordinates are not defined
   });
 
-  //console.log("Location data continent: ", locationData.locationByCoordinates.town);
   if (locationLoading) return <div>Loading...</div>;
   if (locationError) return <div>Error! {locationError.message}</div>;
 
@@ -107,6 +106,7 @@ export function Note() {
           <Col>
             <img
               src={`https://beachfinds-uploadserver.azurewebsites.net/api/v1/upload/${note.filename}`}
+              //src={`http://localhost:3002/api/v1/upload/${note.filename}`}
               alt={note.item_name}
               style={{ maxWidth: "100%" }}
             />
