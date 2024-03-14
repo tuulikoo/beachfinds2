@@ -1,8 +1,8 @@
 import { GraphQLError } from "graphql";
-import postModel from "../models/postModel";
-import { Post, LocationInput } from "../../types/DBtypes";
-import { MyContext } from "../../types/MyContext";
-import { isLoggedIn } from "../../functions/authorize";
+import postModel from "../models/postModel.js";
+import { Post, LocationInput } from "../../types/DBtypes.js";
+import { MyContext } from "../../types/MyContext.js";
+import { isLoggedIn } from "../../functions/authorize.js";
 
 export default {
   Query: {

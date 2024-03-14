@@ -1,5 +1,5 @@
-import { LocationDetails } from "../../types/DBtypes";
-import locationsModel from "../models/locationsModel";
+import { LocationDetails } from "../../types/DBtypes.js";
+import locationsModel from "../models/locationsModel.js";
 
 export const locationResolver = {
   Query: {

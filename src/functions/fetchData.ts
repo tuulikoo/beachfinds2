@@ -1,5 +1,5 @@
 import {GraphQLError} from 'graphql';
-import {ErrorResponse} from '../types/MessageTypes';
+import {ErrorResponse} from '../types/MessageTypes.js';
 
 const fetchData = async <T>(
   url: string,

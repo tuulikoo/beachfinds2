@@ -5,19 +5,19 @@ import cors from "cors";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import mongoose from "mongoose";
-import typeDefs from "./api/schemas/index";
-import resolvers from "./api/resolvers/index";
+import typeDefs from "./api/schemas/index.js";
+import resolvers from "./api/resolvers/index.js";
 import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from "@apollo/server/plugin/landingPage/default";
-import { notFound, errorHandler } from "./middlewares";
-import authenticate from "./functions/authenticate";
+import { notFound, errorHandler } from "./middlewares.js";
+import authenticate from "./functions/authenticate.js";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { applyMiddleware } from "graphql-middleware";
-import { MyContext } from "./types/MyContext";
+import { MyContext } from "./types/MyContext.js";
 import axios from "axios";
-import { MessageResponse } from "./types/MessageTypes";
+import { MessageResponse } from "./types/MessageTypes.js";
 
 
 const app = express();
@@ -29,9 +29,16 @@ app.use(
   })
 );
 
-app.use(express.static('.'));
+app.use((req, res, next) => {
+  if (req.path.endsWith('.js')) { // Target .js files
+    res.type('application/javascript');
+  }
+  next();
+});
 
-app.use(express.json()); // Make sure to use this middleware to parse JSON request bodies
+
+app.use(express.static('.'));
+app.use(express.json());
 //app.use(cors({ origin: "http://localhost:5173" }));
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 

@@ -1,10 +1,10 @@
 import { GraphQLError } from "graphql";
-import { Post, User, UserInput, UserOutput } from "../../types/DBtypes"; //TokenContent should be used
-import fetchData from "../../functions/fetchData";
-import { LoginResponse, UserResponse } from "../../types/MessageTypes"; //LoginResponse should be used
-import { isLoggedIn } from "../../functions/authorize";
-import { MyContext } from "../../types/MyContext";
-import postModel from "../models/postModel";
+import { Post, User, UserInput, UserOutput } from "../../types/DBtypes.js"; //TokenContent should be used
+import fetchData from "../../functions/fetchData.js";
+import { LoginResponse, UserResponse } from "../../types/MessageTypes.js"; //LoginResponse should be used
+import { isLoggedIn } from "../../functions/authorize.js";
+import { MyContext } from "../../types/MyContext.js";
+import postModel from "../models/postModel.js";
 
 export default {
   Post: {

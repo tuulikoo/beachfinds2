@@ -1,5 +1,5 @@
-import { Post } from "../../types/DBtypes";
-import tagModel from "../models/tagModel";
+import { Post } from "../../types/DBtypes.js";
+import tagModel from "../models/tagModel.js";
 
 export const tagResolver = {
   Post: {
