@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 
 app.use(express.static('.'));
 app.use(express.json());
-//app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://polite-ground-086db8903.4.azurestaticapps.net" }));
 console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 const mongoConnect = async () => {
