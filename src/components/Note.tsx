@@ -8,6 +8,7 @@ import {
   GET_LOCATION_BY_COORDINATES,
 } from "../operations/queries";
 import { useAuth } from "../types/AuthContext";
+import { useEffect, useState } from "react";
 
 export function Note() {
   // USE AS IMG URL http://localhost:3002/api/v1/upload/ OR beachfinds-uploadserver.azurewebsites.net/api/v1/upload/
@@ -15,7 +16,16 @@ export function Note() {
   const [deletePost] = useMutation(DELETE_POST);
   const note = useNote();
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  useEffect(() => {
+    if(note.owner.id === user?.id || user?.email === "admin@admin.fi"){
+      setIsAuthorized(true);
+    } else {
+      setIsAuthorized(false);
+    }
+  }, [note.owner.id, user?.id, user?.email]); 
 
   const allNotes = useQuery(GET_ALL_POSTS);
   console.log("All notes: ", allNotes);
@@ -81,14 +91,14 @@ export function Note() {
         <Col xs="auto">
           <Stack gap={2} direction="horizontal">
             <Link to={`/${note.id}/edit`}>
-              <Button variant="primary" disabled={!token}>
+              <Button variant="primary" disabled={!isAuthorized}>
                 Edit
               </Button>
             </Link>
             <Button
               variant="outline-danger"
               onClick={() => onDelete(note.id)}
-              disabled={!token}
+              disabled={!isAuthorized}
             >
               Delete
             </Button>

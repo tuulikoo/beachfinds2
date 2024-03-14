@@ -1,7 +1,22 @@
 # Beachfinds
-##Typescript + Graphql + React + Vite
 
 Beachfinds-app is meant for people who like to see what others have found on the beach and who want to share what they have found. There is a word for this kind of treasure hunting on beaches: beachcombing. Beachcombing is a serious hobby for some, and for others it´s something they may occasionally do. This application allows people to share their findings. Project was made on Web development 2 course in Metropolia with aim to practice building an app using graphql backend with typescript.
+
+![view of Beachfinds front page](<Screenshot 2024-03-14 at 17.20.21.png>)
+
+*Small disclaimer here; unfortunately the project is not finished but has still a lot to do. There are overlapping buttons etc. but especially there are in many places missing error handling and data sanitation and backend functionalitis that are not yet in use when testing in browser.*
+
+## Typescript + Graphql + React + Vite
+
+The frontend of this project is done using React Typescript with Vite. 
+Typescript and GraphQL have been used in backend. Backend queries and mutations can be tested at https://tuulikiv-beachfinds.azurewebsites.net/graphql/.
+
+More info on GraphQL: [GraphQL](https://graphql.org)
+More info of Vite: [Vite](https://vitejs.dev)
+More info of React with typescript: [React with typescript](https://react.dev/learn/typescript)
+
+
+
 
 Currently, two official plugins are available:
 
