@@ -1,6 +1,7 @@
 # Beachfinds
 
-Application available at [polite-ground-086db8903.4.azurestaticapps.net](https://polite-ground-086db8903.4.azurestaticapps.net)
+Application available at [polite-ground-086db8903.4.azurestaticapps.net](https://polite-ground-086db8903.4.azurestaticapps.net).
+GraphQL available for testing at [https://tuulikiv-beachfinds.azurewebsites.net/graphql](https://tuulikiv-beachfinds.azurewebsites.net/graphql).
 
 Beachfinds-app is meant for people who like to see what others have found on the beach and who want to share what they have found. There is a word for this kind of treasure hunting on beaches: beachcombing. Beachcombing is a serious hobby for some, and for others it´s something they may occasionally do. This application allows people to share their findings. Project was made on Web development 2 course in Metropolia with aim to practice building an app using graphql backend with typescript.
 
