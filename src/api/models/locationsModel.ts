@@ -16,7 +16,7 @@ const locationDetailsSchema = new mongoose.Schema<LocationDetails>({
   },
   country: {
     type: String,
-    required: true,
+    required: false,
   },
   state: {
     type: String,

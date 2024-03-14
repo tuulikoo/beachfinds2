@@ -46,7 +46,7 @@ export const Navbar: React.FC = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/new">
-                Create New Note
+                Add new post
               </Link>
             </li>
             {user ? (

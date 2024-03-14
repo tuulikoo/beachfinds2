@@ -3,7 +3,7 @@ scalar DateTime
 type LocationDetails {
   id: ID!
   continent: String!
-  country: String!
+  country: String
   state: String
   town: String
   lat: Float!
@@ -12,7 +12,7 @@ type LocationDetails {
 
 input LocationDetailsInput {
   continent: String!
-  country: String!
+  country: String
   state: String
   town: String
   lat: Float!
