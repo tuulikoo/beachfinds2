@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Define your GraphQL endpoint
-const GRAPHQL_ENDPOINT = "http://localhost:3000/graphql"; // Adjust this to your actual GraphQL server endpoint
+// Define your GraphQL endpoint tuulikiv-beachfinds.azurewebsites.net/graphql OR localhost:3000/graphql
+const GRAPHQL_ENDPOINT = "tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
 
 type LocationDetailsInput = {
   lat: number;

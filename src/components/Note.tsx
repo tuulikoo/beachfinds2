@@ -10,9 +10,7 @@ import {
 import { useAuth } from "../types/AuthContext";
 
 export function Note() {
-  //import REACT_APP_IMAGE_URL=http://localhost:3002/api/v1/upload/ from .env
-  const imgUrl = import.meta.env.REACT_APP_IMAGE_URL;
-  console.log("Image URL: ", imgUrl);
+  // USE AS IMG URL http://localhost:3002/api/v1/upload/ OR beachfinds-uploadserver.azurewebsites.net/api/v1/upload/
 
   const [deletePost] = useMutation(DELETE_POST);
   const note = useNote();
@@ -109,7 +107,7 @@ export function Note() {
         <Row className="mt-4">
           <Col>
             <img
-              src={`http://localhost:3002/api/v1/upload/${note.filename}`}
+              src={`beachfinds-uploadserver.azurewebsites.net/api/v1/upload/${note.filename}`}
               alt={note.item_name}
               style={{ maxWidth: "100%" }}
             />

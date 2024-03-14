@@ -26,9 +26,12 @@ const ChatInterface: React.FC = () => {
   
     const newUserMessage = { sender: 'You', content: userInput };
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
-  
+
+
+  //tuulikiv-beachfinds.azurewebsites.net/chat   OR
+  //http://localhost:3000/chat
     try {
-      const response = await fetch('http://localhost:3000/chat', {
+      const response = await fetch('tuulikiv-beachfinds.azurewebsites.net/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
