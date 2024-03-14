@@ -36,7 +36,7 @@ const checkCoordinatesExist = async (lat: number, lng: number): Promise<boolean>
       }
     );
 
-    const locationData = response.data.locationByCoordinates;
+    const locationData = response.data.data.locationByCoordinates;
     console.log("_____________Location**** data:", locationData);
     return !!locationData;
   } catch (error) {
