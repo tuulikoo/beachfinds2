@@ -80,8 +80,14 @@ ________________________
 The project uses upload-server to upload and serve images and auth-server for user authentication. Upload server is running on (beachfinds-uploadserver.azurewebsites.net) and auth-server on (beachfinds-authserver.azurewebsites.net).
 Both are server that were used in Metropolia Webdevelopment 2 course and are provided by the course teacher.
 
+In Github:  [upload-server](https://github.com/tuulikoo/upload_server)
+            [auth-server](https://github.com/tuulikoo/auth_server)
+
+
+
+
 ### Running locally
-If you want to run the project locally, you need to update some of the urls from azure to local. Start the project by installing with
+If you want to run the project locally, you need to update some of the urls from azure to localhost. Start the project by installing with
 ```
 npm i
 ```
@@ -101,3 +107,4 @@ and then continue with
 ```
 npm run build:backend
 ```
+You need to configure .env with AUTH_URL, UPLOAD_URL, OPENAI_API_KEY, ports etc. You need to have upload- and auth-server on (npm run dev) to be able to use Beachfinds. Auth-server should use port 3001, upload-server port 3002 and beachfinds 3000. Vite runs automatically on port 5173.
