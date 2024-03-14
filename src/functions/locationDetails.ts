@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Define your GraphQL endpoint tuulikiv-beachfinds.azurewebsites.net/graphql OR localhost:3000/graphql
-const GRAPHQL_ENDPOINT = "tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
+const GRAPHQL_ENDPOINT = "https://tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
 
 type LocationDetailsInput = {
   lat: number;
@@ -13,7 +13,8 @@ type LocationDetailsInput = {
 };
 
 const fetchFromOpenCage = async (lat: number, lng: number) => {
-  const apiKey = "88804a8245c24555a671aaf4b1b6e87c"; // Replace with your actual OpenCage API key
+  const apiKey = process.env.OPENCAGE_API_KEY; // Replace with your OpenCage API key
+  console.log("Open cage API key:", apiKey);
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
 
   try {
