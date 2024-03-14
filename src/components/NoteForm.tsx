@@ -78,7 +78,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
 
     try {
       const uploadResponse = await fetch(
-        `http://beachfinds-uploadserver.azurewebsites.net/api/v1/upload/`,
+        `https://beachfinds-uploadserver.azurewebsites.net/api/v1/upload/`,
         {
           method: "POST",
           body: formData,
