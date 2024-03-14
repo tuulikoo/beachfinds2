@@ -31,7 +31,7 @@ const ChatInterface: React.FC = () => {
   //tuulikiv-beachfinds.azurewebsites.net/chat   OR
   //http://localhost:3000/chat
     try {
-      const response = await fetch('tuulikiv-beachfinds.azurewebsites.net/chat', {
+      const response = await fetch('https://tuulikiv-beachfinds.azurewebsites.net/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
