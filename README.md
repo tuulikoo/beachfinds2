@@ -32,7 +32,7 @@ If you want to see additional details about the posts, you can click on the indi
 
 ### Login and registration
 
-You can login with visitor@test.com and use “password” as password or if you want, you can register a new user below the login button. Fill in e-mail, username, password, country, city and contact. (Contact is not actually used in any way at the current app). Then choose “register”. Login with you e-mail and password.
+You can login with visitor@test.com and use “password” as password or if you want, you can register a new user below the login button. Fill in e-mail, username, password, country, city and contact. (Contact is not actually used in any way at the current app). Then choose “register” and Close. Login with you e-mail and password.
 
 ### How to add a new post?
 
