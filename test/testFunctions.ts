@@ -1,99 +1,56 @@
 
 
-import { TestUser } from '../src/types/DBtypes';
 import { Application } from 'express';
-import { LoginResponse } from '../src/types/MessageTypes';
 import request from 'supertest';
+import { Post } from '../src/types/DBtypes';
 
 
-const postUser = (
-    url: string | Application,
-    user: TestUser,
-  ): Promise<TestUser> => {
-    return new Promise((resolve, reject) => {
+const getPosts = (url: string | Application): Promise<Post[]> => {
+  return new Promise((resolve, reject) => {
     request(url)
-        .post('/graphql')
-        .set('Content-type', 'application/json')
-        .send({
-          query: `mutation Mutation($user: UserInput!) {
-            register(user: $user) {
-              message
-              user {
-                id
-                user_name
-                email
-                city
-                country
-                contact
-              }
+      .post('/graphql')
+      .set('Content-type', 'application/json')
+      .send({
+        query: `query GetAllPosts {
+          posts {
+            id
+            title
+            item_name
+            description
+            category
+            filename
+            owner {
+              id
+              user_name
             }
-          }`,
-          variables: {
-            user: {
-              user_name: user.user_name,
-              email: user.email,
-              password: user.password,
-                country: user.country,
-                city: user.city,
-                contact: user.contact,
-            },
-          },
-        })
-        .expect(200, (err, response) => {
-          if (err) {
-            reject(err);
-          } else {
-            const userData = response.body.data.register;
-            expect(userData).toHaveProperty('message');
-            expect(userData).toHaveProperty('user');
-            expect(userData.user).toHaveProperty('id');
-            expect(userData.user.user_name).toBe(user.user_name);
-            expect(userData.user.email).toBe(user.email);
-            expect(userData.user.country).toBe(user.country);
-            expect(userData.user.city).toBe(user.city);
-            resolve(response.body.data.register);
-          }
-        });
-    });
-  };
-
-  const loginUser = (
-    url: string | Application,
-    vars: {credentials: {username: string; password: string}},
-  ): Promise<LoginResponse> => {
-    return new Promise((resolve, reject) => {
-      request(url)
-        .post('/graphql')
-        .set('Content-type', 'application/json')
-        .send({
-          query: `mutation Login($credentials: Credentials!) {
-            login(credentials: $credentials) {
-              token
-              message
-              user {
-                email
-                user_name
-                id
-              }
+            tags {
+              id
+              label
             }
-          }`,
-          variables: vars,
-        })
-        .expect(200, (err, response) => {
-          if (err) {
-            reject(err);
-          } else {
-            const user = vars.credentials;
-            console.log('login response', response.body);
-            const userData = response.body.data.login;
-            expect(userData).toHaveProperty('message');
-            expect(userData).toHaveProperty('token');
-            expect(userData).toHaveProperty('user');
-            expect(userData.user).toHaveProperty('id');
-            expect(userData.user.email).toBe(user.username);
-            resolve(response.body.data.login);
+            location {
+              type
+              coordinates
+            }
           }
-        });
-    });
-  };
-  export { postUser, loginUser}
+        }
+        }`,
+      })
+      .expect(200, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          const posts = response.body.data.posts;
+          expect(posts).toBeInstanceOf(Array);
+          posts.forEach((post: Post) => {
+            expect(post).toHaveProperty('id');
+            expect(post).toHaveProperty('title');
+            expect(post).toHaveProperty('description');
+            expect(post.owner).toHaveProperty('email');
+            expect(post.owner).toHaveProperty('id');
+            expect(post.owner).toHaveProperty('user_name');
+          });
+          resolve(posts);
+        }
+      });
+  });
+};
