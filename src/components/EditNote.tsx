@@ -92,7 +92,7 @@ export const EditNote = ({ availableTags }: EditNoteProps) => {
 
   return (
     <>
-      <h1 className="mb-4">Edit Note</h1>
+      <h1 className="mb-4">Edit Post</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group as={Row} controlId="title">
           <Form.Label column sm={2}>

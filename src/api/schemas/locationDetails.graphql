@@ -21,6 +21,9 @@ input LocationDetailsInput {
 
 type Query {
   locationById(id: ID!): LocationDetails
+  """
+  if testing in sandbox, choose only continent
+  """
   allLocations: [LocationDetails!]!
   locationByCoordinates(lat: Float!, lng: Float!): LocationDetails
 }
