@@ -39,9 +39,6 @@ export default {
       _parent: undefined,
       args: { credentials: { username: string; password: string } }
     ) => {
-      // Log the credentials received to verify they are what you expect
-      console.log("Attempting login with credentials:", args.credentials);
-
       try {
         const response = await fetchData<LoginResponse>(
           `${process.env.AUTH_URL}/auth/login`,
@@ -53,9 +50,6 @@ export default {
             body: JSON.stringify(args.credentials),
           }
         );
-
-        // Log the response from the server
-        console.log("Login response:", response);
 
         return response;
       } catch (error) {

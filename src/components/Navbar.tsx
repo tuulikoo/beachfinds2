@@ -10,7 +10,6 @@ export const Navbar: React.FC = () => {
     const confirmLogout = window.confirm("Confirm logout");
     if (confirmLogout) {
       logout();
-      console.log("User logged out");
       navigate("/");
     }
   };

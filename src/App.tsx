@@ -100,7 +100,6 @@ function App() {
     loading: postsLoading,
     error: postsError,
   } = useQuery(GET_ALL_POSTS);
-  console.log("tagsData", tagsData);
   if (tagsLoading || postsLoading) return <p>Loading...</p>;
   if (tagsError) return <p>Error loading tags: {tagsError.message}</p>;
   if (postsError) return <p>Error loading posts: {postsError.message}</p>;

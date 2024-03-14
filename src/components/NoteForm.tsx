@@ -94,7 +94,7 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
       }
 
       const uploadResult = await uploadResponse.json();
-    
+
       const imgcoordinates: number[] = uploadResult.data.location.coordinates;
       const finalFilename: string = `${uploadResult.data.filename}.png`;
 
@@ -115,18 +115,11 @@ export const NoteForm = ({ onSubmit, availableTags }: NoteFormProps) => {
         location: {
           type: "Point",
           coordinates: [imgcoordinates[0], imgcoordinates[1]],
-          //coordinates: [parseFloat(latitude), parseFloat(longitude)],
         },
       };
-      console.log("New post: ", newPost);
-      console.log(
-        "Calling processLocationDetails with coordinates:",
-        imgcoordinates[0],
-        imgcoordinates[1]
-      );
+
       try {
         await fetchFromOpenCage(imgcoordinates[0], imgcoordinates[1]);
-        console.log("Location details processed successfully.");
       } catch (error) {
         console.error("Error processing location details:", error);
       }

@@ -17,15 +17,15 @@ export function Note() {
   const note = useNote();
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+
   const [isAuthorized, setIsAuthorized] = useState(false);
   useEffect(() => {
-    if(note.owner.id === user?.id || user?.email === "admin@admin.fi"){
+    if (note.owner.id === user?.id || user?.email === "admin@admin.fi") {
       setIsAuthorized(true);
     } else {
       setIsAuthorized(false);
     }
-  }, [note.owner.id, user?.id, user?.email]); 
+  }, [note.owner.id, user?.id, user?.email]);
 
   const allNotes = useQuery(GET_ALL_POSTS);
   console.log("All notes: ", allNotes);
@@ -47,7 +47,8 @@ export function Note() {
   if (locationLoading) return <div>Loading...</div>;
   if (locationError) return <div>Error! {locationError.message}</div>;
 
-  const { continent, country, state, town } = locationData.locationByCoordinates || {};
+  const { continent, country, state, town } =
+    locationData.locationByCoordinates || {};
 
   const onDelete = (id: string) => {
     deletePost({
@@ -63,8 +64,6 @@ export function Note() {
   const onBackClick = () => {
     navigate(-1);
   };
-
-  console.log("Note: ", note);
 
   return (
     <>

@@ -33,7 +33,6 @@ export const EditNote = ({ availableTags }: EditNoteProps) => {
     value: tag.id,
   }));
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [initialData, setInitialData] = useState({
     title: "",
     description: "",

@@ -15,7 +15,6 @@ const MapShow: React.FC<MapShowProps> = ({ postData }) => {
   const query = useQuery();
   const latParam = query.get("lat");
   const lngParam = query.get("lng");
-  console.log("postData = ", postData);
   const posts = postData.posts;
 
   // Convert posts to locations

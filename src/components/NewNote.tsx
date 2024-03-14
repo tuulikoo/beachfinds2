@@ -8,13 +8,10 @@ import { PostData } from "../App";
 const NewNote = () => {
   const { loading, error, data } = useQuery(GET_ALL_TAGS);
   const [createPostMutation] = useMutation(CREATE_POST, {
-    refetchQueries: [
-      { query: GET_ALL_POSTS }, 
-    ],
+    refetchQueries: [{ query: GET_ALL_POSTS }],
   });
 
   const handleSubmit = async (noteData: PostData) => {
-    console.log(noteData);
     createPostMutation({ variables: { input: noteData } });
   };
 

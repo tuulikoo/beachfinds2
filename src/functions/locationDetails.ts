@@ -1,6 +1,7 @@
 import axios from "axios";
 // Define your GraphQL endpoint tuulikiv-beachfinds.azurewebsites.net/graphql OR localhost:3000/graphql
-const GRAPHQL_ENDPOINT = "https://tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
+const GRAPHQL_ENDPOINT =
+  "https://tuulikiv-beachfinds.azurewebsites.net/graphql"; // Adjust this to your actual GraphQL server endpoint
 
 type LocationDetailsInput = {
   lat: number;
@@ -13,8 +14,9 @@ type LocationDetailsInput = {
 
 const fetchFromOpenCage = async (lat: number, lng: number) => {
   //TODO: If coordinates exist in locationdetails db, do not fetch again
+  //TODO: hide api-key
   const apiKey = "88804a8245c24555a671aaf4b1b6e87c";
-  
+
   const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
 
   try {
@@ -23,10 +25,10 @@ const fetchFromOpenCage = async (lat: number, lng: number) => {
       const result = response.data.results[0];
 
       const locationDetails = {
-        continent: result.components.continent || 'Unknown Continent',
-        country: result.components.country || 'Unknown Country',
-        state: result.components.state || 'Unknown State',
-        town: result.components.town || 'Unknown Town',
+        continent: result.components.continent || "Unknown Continent",
+        country: result.components.country || "Unknown Country",
+        state: result.components.state || "Unknown State",
+        town: result.components.town || "Unknown Town",
         lat: lat,
         lng: lng,
       };
@@ -80,10 +82,7 @@ const saveLocationDetailsToDB = async (
       console.error("GraphQL errors:", response.data.errors);
       throw new Error("Failed to save location details due to GraphQL errors");
     } else {
-      console.log(
-        "Location details saved successfully:",
-        response.data.data.createLocationDetails
-      );
+      console.log("Location details saved successfully:");
       return response.data.data.createLocationDetails;
     }
   } catch (error) {

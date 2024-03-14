@@ -40,7 +40,6 @@ app.use((req, res, next) => {
 app.use(express.static('.'));
 app.use(express.json());
 app.use(cors());
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
 const mongoConnect = async () => {
   try {

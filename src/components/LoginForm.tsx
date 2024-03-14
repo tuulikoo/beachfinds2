@@ -17,7 +17,7 @@ import { useAuth } from "../types/AuthContext";
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showModal, setShowModal] = useState(false); // State to control the modal display
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -25,13 +25,11 @@ export const LoginForm: React.FC = () => {
   const [loginMutation, { loading, error }] = useMutation(LOGIN_USER, {
     variables: {
       credentials: {
-        username: email, // Assuming email is used as username
+        username: email,
         password,
       },
     },
     onCompleted: (data) => {
-      console.log("Complete login response:", data);
-      console.log("Login successful", data);
       login(data.login);
       alert("You are logged in");
       navigate("/");

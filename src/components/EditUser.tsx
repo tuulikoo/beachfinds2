@@ -27,7 +27,6 @@ export const EditUser: React.FC = () => {
 
   const { user } = useAuth();
   const userId = user?.id;
-  console.log("userid in editing", userId);
   const { logout } = useAuth();
   const [showAllUsersModal, setShowAllUsersModal] = useState(false);
 
