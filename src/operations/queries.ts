@@ -159,6 +159,12 @@ export const GET_LOCATION_BY_COORDINATES = gql`
   query LocationByCoordinates($lat: Float!, $lng: Float!) {
     locationByCoordinates(lat: $lat, lng: $lng) {
       id
+      lat
+      lng
+      continent
+      country
+      state
+      town
     }
   }
 `;
