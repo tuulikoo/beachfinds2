@@ -38,8 +38,7 @@ export function Note() {
   if (locationLoading) return <div>Loading...</div>;
   if (locationError) return <div>Error! {locationError.message}</div>;
 
-  const { continent, country, state, town } =
-    locationData.locationByCoordinates;
+  const { continent = '', country = '', state = '', town = '' } = locationData || {};
 
   const onDelete = (id: string) => {
     deletePost({
