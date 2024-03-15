@@ -6,6 +6,7 @@ import { GET_USER_DETAILS } from "../operations/queries";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../types/AuthContext";
 import AllUsers from "./AllUsers";
+import { NotesByUser } from "./NotesByUser";
 
 interface UserDetails {
   email: string;
@@ -90,7 +91,7 @@ export const EditUser: React.FC = () => {
       updatedUserData.contact = user?.contact || "no"; // Fallback to user.contact if available
     }
 
-    console.log("Updated userData:", updatedUserData);
+
 
     updateUserDetails({
       variables: {
@@ -229,6 +230,7 @@ export const EditUser: React.FC = () => {
           </Form>
         </Col>
       </Row>
+      <NotesByUser/>
       {isAdmin && (
         <Button variant="primary" onClick={() => setShowAllUsersModal(true)}>
           Show all users
@@ -241,5 +243,6 @@ export const EditUser: React.FC = () => {
         />
       )}
     </Container>
+    
   );
 };

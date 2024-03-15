@@ -78,5 +78,4 @@ export type{
   Post,
   LocationDetails,
   TestUser
-  //LocationDetailsInput
 };

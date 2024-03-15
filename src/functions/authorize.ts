@@ -1,5 +1,5 @@
 import {GraphQLError} from 'graphql';
-import {MyContext} from '../types/MyContext';
+import {MyContext} from '../types/MyContext.js';
 
 const isLoggedIn = (context: MyContext): void => {
   if (!context.userdata) {
