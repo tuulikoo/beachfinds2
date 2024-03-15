@@ -70,6 +70,7 @@ export function Note() {
       <Row className="align-items-center mb-4">
         <Col>
           <h3>Title: {note.title}</h3>
+          <>Date posted: {note.createdAt}</>
           <p>Category: {note.category}</p>
           <p>Owner: {note.owner.user_name}</p>
           <Link

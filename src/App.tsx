@@ -13,6 +13,8 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_TAGS, GET_ALL_POSTS } from "./operations/queries";
 import MapShow from "./components/MapComponent";
 
+//TODO: Clean the types and remove unnecessary
+
 export type User = {
   id: string;
   user_name: string;
@@ -52,6 +54,7 @@ export type RawPostData = {
   tags: string[];
   filename: string;
   category: "Shells" | "Seaglass" | "Fossils" | "Stones" | "Driftwood" | "Misc";
+  owner: User;
   location: {
     type: "Point";
     coordinates: [number, number];
@@ -67,17 +70,11 @@ export type NoteData = {
   filename: string; // Optional property for image name
   category: "Shells" | "Seaglass" | "Fossils" | "Stones" | "Driftwood" | "Misc";
   owner: User;
+  createdAt: string;
   location: {
     type: "Point";
     coordinates: [number, number];
   };
-};
-
-export type UserData = {
-  title: string;
-  markdown: string;
-  tags: Tag[];
-  imageName?: string; // Optional property for image name
 };
 
 export type Tag = {
