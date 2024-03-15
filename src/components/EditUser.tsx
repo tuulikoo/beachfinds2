@@ -2,10 +2,11 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_USER, UPDATE_USER } from "../operations/mutations";
-import { GET_USER_DETAILS } from "../operations/queries";
+import { GET_USER_DETAILS, GET_POSTS_BY_OWNER } from "../operations/queries";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../types/AuthContext";
 import AllUsers from "./AllUsers";
+import { NoteList } from "./NoteList";
 
 interface UserDetails {
   email: string;
@@ -37,6 +38,15 @@ export const EditUser: React.FC = () => {
   } = useQuery(GET_USER_DETAILS, {
     variables: { id: userId }, // Pass userId as a variable to the query
   });
+
+  const {
+    data: postsData,
+    loading: postsLoading,
+    error: postsError,
+  } = useQuery(GET_POSTS_BY_OWNER, {
+    variables: { ownerId: userId },
+  });
+
 
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
@@ -239,6 +249,13 @@ export const EditUser: React.FC = () => {
           show={showAllUsersModal}
           handleClose={() => setShowAllUsersModal(false)}
         />
+      )}
+      {postsLoading ? (
+        <p>Loading posts...</p>
+      ) : postsError ? (
+        <p>Error loading posts: {postsError.message}</p>
+      ) : (
+        <NoteList postData={{ posts: postsData.postsByOwner }} />
       )}
     </Container>
     

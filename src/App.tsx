@@ -108,7 +108,7 @@ function App() {
     <Container className="my-4">
       <Navbar />
       <Routes>
-        <Route path="/" element={<NoteList />} />
+        <Route path="/" element={<NoteList postData={postData}/>} />
         <Route path="/map" element={<MapShow postData={postData} />} />
         <Route path="/new" element={<NewNote />} />
         <Route path="/:id" element={<NoteLayout />}>

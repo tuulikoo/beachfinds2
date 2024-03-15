@@ -3,9 +3,9 @@ import { Badge, Button, Card, Col, Modal, Row, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import ReactSelect from "react-select";
-import { Tag } from "../App";
+import { GetAllNotesQueryData, Tag } from "../App";
 import styles from "./NoteList.module.css";
-import { GET_ALL_POSTS, GET_ALL_TAGS } from "../operations/queries";
+import {  GET_ALL_TAGS } from "../operations/queries";
 import { useQuery } from "@apollo/client";
 import { useMutation } from "@apollo/client";
 import { DELETE_TAG, UPDATE_TAG } from "../operations/mutations";
@@ -27,24 +27,24 @@ type EditTagsModalProps = {
   onUpdateTag: (id: string, label: string) => void;
 };
 
-export function NoteList() {
-  const {
-    loading: loadingPosts,
-    error: errorPosts,
-    data: dataPosts,
-  } = useQuery(GET_ALL_POSTS);
+type NoteListProps = {
+  postData: GetAllNotesQueryData; // Adjusted to accept postData
+};
+
+export function NoteList({ postData }: NoteListProps) { // Destructure postData from props
   const {
     loading: loadingTags,
     error: errorTags,
     data: dataTags,
   } = useQuery(GET_ALL_TAGS);
+
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
   const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false);
   const [deleteTagMutation] = useMutation(DELETE_TAG);
   const [updateTagMutation] = useMutation(UPDATE_TAG);
 
-  const notes = useMemo(() => dataPosts?.posts || [], [dataPosts]);
+  const notes = useMemo(() => postData?.posts || [], [postData]);
   const availableTags = useMemo(() => dataTags?.allTags || [], [dataTags]);
 
   const filteredNotes = useMemo(() => {
@@ -60,8 +60,8 @@ export function NoteList() {
     });
   }, [notes, selectedTags, title]);
 
-  if (loadingPosts || loadingTags) return <p>Loading...</p>;
-  if (errorPosts || errorTags) return <p>Error loading data</p>;
+  if ( loadingTags) return <p>Loading...</p>;
+  if ( errorTags) return <p>Error loading data</p>;
 
   const onDeleteTag = async (tagId: string) => {
     try {

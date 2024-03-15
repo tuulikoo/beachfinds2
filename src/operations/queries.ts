@@ -129,8 +129,22 @@ export const GET_POSTS_BY_OWNER = gql`
     postsByOwner(ownerId: $ownerId) {
       id
       title
+      item_name
       description
-      createdAt
+      category
+      filename
+      owner {
+        id
+        user_name
+      }
+      tags {
+        id
+        label
+      }
+      location {
+        type
+        coordinates
+      }
     }
   }
 `;
