@@ -34,6 +34,8 @@ If you want to see additional details about the posts, you can click on the indi
 
 You can login with visitor@test.com and use “password” as password or if you want, you can register a new user below the login button. Fill in e-mail, username, password, country, city and contact. (Contact is not actually used in any way at the current app). Then choose “register” and Close. Login with you e-mail and password.
 
+![login and register](<Screenshot 2024-03-15 at 10.29.52.png>)
+
 ### How to add a new post?
 
 1.  Add a new post when you are logged in by choosing “Add new post” from Navbar. 
@@ -73,6 +75,10 @@ More info on OpenAI Api: [OpenAiApi](https://openai.com/blog/openai-api).
 ### User
 
 If you navigate to User-tab, you can modify your own (logged in) details or delete your account. If you delete your account, all your posts are deleted too. If you are logged in as admin, you will see a list of users and can delete the ones who have been posting rubbish.
+
+You will also see your own posts beneath.  The posts-view is actually the same as on the homepage, therefore it has also the same heading as on homepage and is a little misleading. But only your posts are listed.
+
+![image of userpage](<Screenshot 2024-03-15 at 10.28.11.png>)
 ________________________
 
 ## Other
